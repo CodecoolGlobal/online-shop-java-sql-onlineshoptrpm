@@ -13,19 +13,10 @@ public class UserDao extends Dao{
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         connect();
-
         try {
             ResultSet results = statement.executeQuery("SELECT * FROM Users;");
             while (results.next()) {
-                int userId = results.getInt("id");
-                String name = results.getString("name");
-                String password = results.getString("password");
-                String email = results.getString("email");
-                int phoneNumber = results.getInt("phone");
-                int role = results.getInt("role_id");
-
-                User user = new User(userId, name, password, email,  phoneNumber, role);
-                users.add(user);
+                users.add(createUser(results));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,14 +24,22 @@ public class UserDao extends Dao{
         return users;
     }
 
+    private User createUser(ResultSet results) throws SQLException{
+        int userId = results.getInt("id");
+        String name = results.getString("name");
+        String password = results.getString("password");
+        String email = results.getString("email");
+        int phoneNumber = results.getInt("phone");
+        int role = results.getInt("role_id");
+        return new User(userId, name, password, email,  phoneNumber, role);
+    }
+
     public User getUser(String email, String password) {
         connect();
-        User user;
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE email = ? and password = ?;");
             statement.setString(1, email);
             statement.setString(2, password);
-
             ResultSet results = statement.executeQuery();
 //
 //            while (results.next()) {
@@ -53,15 +52,12 @@ public class UserDao extends Dao{
 //                user = new User(id, name, surname, email, password, id);
 //                return user;
 //            }
-
             List<User> users = getUsers();
             int indexDifference = 1;
             int id = results.getInt("id") - indexDifference;
-
             results.close();
             statement.close();
             connection.close();
-
             return users.get(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
