@@ -12,6 +12,18 @@ public class UI {
         System.out.flush();
     }
 
+    public void displayMainMenu(){
+        clearScreen();
+        System.out.println("WELCOME TO ONLINE SHOP!");
+        System.out.println("MAIN MENU: ");
+    }
+
+    public void displayInLine(String [] strings){
+        for (String string : strings) {
+            System.out.println(string);
+        }
+    }
+
     public void displayAdminMenu(){
         clearScreen();
         Map<Integer, String> adminMenu = makeAdminChoiceMap();
