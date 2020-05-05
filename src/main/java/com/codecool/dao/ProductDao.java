@@ -35,6 +35,9 @@ public class ProductDao extends Dao {
         return new Product(id, name, price, amount, is_available, category_id);
     }
 
-
+    public void addNewProduct(){
+        //temp method
+        System.out.println("here will be a method adding new product to database");
+    }
 
 }
