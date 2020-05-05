@@ -8,8 +8,18 @@ public class Category {
     private boolean isAvailable;
     private ArrayList<Product> products;
 
-    public Category(String name) {
+    public Category(int id, String name, boolean isAvailable) {
+        this.id = id;
         this.name = name;
+        this.isAvailable = isAvailable;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     public int getId() {
