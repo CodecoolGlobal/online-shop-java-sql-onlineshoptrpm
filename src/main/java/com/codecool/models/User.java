@@ -2,15 +2,35 @@ package com.codecool.models;
 
 public class User {
     private int id;
-    private String email;
+    private String name;
     private String password;
+    private String email;
     private int phoneNumber;
+    private int role;
 
-    public User(int id, String email, String password, int phoneNumber) {
+    public User(int id, String name, String password, String email, int phoneNumber, int role) {
         this.id = id;
-        this.email = email;
+        this.name = name;
         this.password = password;
+        this.email = email;
         this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public int getId() {

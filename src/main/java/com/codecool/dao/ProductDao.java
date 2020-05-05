@@ -21,9 +21,8 @@ public class ProductDao extends Dao {
                 int amount = results.getInt("amount");
                 boolean is_available = results.getInt("is_available") == 1;
                 int category_id = results.getInt("category_id");
-                Category category = new Category("Name?");//todo function creating Category object based on category_id?
 
-                Product product = new Product(id, name, price, amount, is_available, category);
+                Product product = new Product(id, name, price, amount, is_available, category_id);
                 products.add(product);
             }
             results.close();

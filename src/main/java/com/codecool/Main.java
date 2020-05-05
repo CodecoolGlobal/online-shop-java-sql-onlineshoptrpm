@@ -2,23 +2,21 @@ package com.codecool;
 
 import com.codecool.dao.UserDao;
 import com.codecool.models.User;
-import java.util.Scanner;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         UI ui = new UI();
+        IO io = new IO();
         UserDao userDao = new UserDao();
         //List<User> users = userDao.getUsers();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Login: ");
-        String login = scanner.nextLine();
-        System.out.println("Enter Password: ");
-        String password = scanner.nextLine();
+        String email = io.gatherInput("Enter Email: ");
+        String password = io.gatherInput("Enter Password: ");
 
-        User user = userDao.getUser(login, password);
+
+        User user = userDao.getUser(email, password);
         switch (user.getRole()) {
             case 1:
                 ui.displayAdminMenu();
@@ -28,7 +26,7 @@ public class Main {
                 break;
         }
 
-        System.out.println(user.getName() + " " + user.getSurname());
+        System.out.println(user.getName() + " " + user.getEmail() + " " + user.getPhoneNumber());
 
     }
 }

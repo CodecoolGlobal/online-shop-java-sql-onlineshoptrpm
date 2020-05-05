@@ -1,4 +1,71 @@
 package com.codecool.dao;
+import com.codecool.models.User;
 
-public class UserDao {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+public class UserDao extends Dao{
+
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        connect();
+
+        try {
+            ResultSet results = statement.executeQuery("SELECT * FROM Users;");
+            while (results.next()) {
+                int userId = results.getInt("id");
+                String name = results.getString("name");
+                String password = results.getString("password");
+                String email = results.getString("email");
+                int phoneNumber = results.getInt("phone");
+                int role = results.getInt("role_id");
+
+                User user = new User(userId, name, password, email,  phoneNumber, role);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public User getUser(String email, String password) {
+        connect();
+        User user;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE email = ? and password = ?;");
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            ResultSet results = statement.executeQuery();
+//
+//            while (results.next()) {
+//                int id = results.getInt("id");
+//                String name = results.getString("name");
+//                String surname = results.getString("surname");
+//                int role = results.getInt("role_id");
+//
+//
+//                user = new User(id, name, surname, email, password, id);
+//                return user;
+//            }
+
+            List<User> users = getUsers();
+            int indexDifference = 1;
+            int id = results.getInt("id") - indexDifference;
+
+            results.close();
+            statement.close();
+            connection.close();
+
+            return users.get(id);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        throw new NoSuchElementException("There isn't user with specified data in database");
+    }
 }
