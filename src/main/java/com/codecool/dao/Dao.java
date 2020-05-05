@@ -9,7 +9,7 @@ public abstract class Dao {
     protected Connection connection;
     protected Statement statement;
 
-    public static final String DB_NAME = "src/main/resources/online_shop.db";
+    public static final String DB_NAME = "/home/maciek/IdeaProjects/online-shop-java-sql-onlineshoptrpm/src/main/OnlineShop.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
     public void connect() {
