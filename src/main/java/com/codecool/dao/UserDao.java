@@ -65,7 +65,7 @@ public class UserDao extends Dao{
         throw new NoSuchElementException("There isn't user with specified data in database");
     }
 
-    public void addUser(String userName, String userEmail, String userPassword, String userPhone, String userType) {
+    public void addUser(String userName, String userEmail, String userPassword, int userPhone, int userType) {
         connect();
         PreparedStatement addUser;
         String addString = "INSERT INTO Users (name, email, password, phone, role_id) VALUES (?, ?, ?, ?, ?)";
@@ -74,8 +74,8 @@ public class UserDao extends Dao{
             addUser.setString(1, userName);
             addUser.setString(2, userEmail);
             addUser.setString(3, userPassword);
-            addUser.setString(4, userPhone);
-            addUser.setString(5, userType);
+            addUser.setInt(4, userPhone);
+            addUser.setInt(5, userType);
             addUser.executeUpdate();
             addUser.close();
             connection.close();

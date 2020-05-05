@@ -41,8 +41,8 @@ public class MenuHandler {
         String name = io.gatherInput("Enter your name: ");
         String email = io.gatherInput("Enter your email: "); //todo add double entering email and password for checking correctness
         String password = io.gatherInput("Enter your password: "); //todo cover password in console with "*"
-        String phone = String.valueOf(io.gatherIntInput("Enter your phone number: ",999999999));
-        String role = "2"; //default for customer
+        int phone = io.gatherIntInput("Enter your phone number: ",999999999);
+        int role = 2; //default for customer
         userDao.addUser(name, email, password, phone, role);
     }
 
