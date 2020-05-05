@@ -13,7 +13,10 @@ public class UI {
     }
 
     public void displayAdminMenu(){
-
+        clearScreen();
+        Map<Integer, String> adminMenu = makeAdminChoiceMap();
+        System.out.println("Admin MENU: ");
+        adminMenu.forEach((k,v) -> System.out.println(k+". "+v));
     }
 
     public void displayCustomerMenu(){
@@ -37,5 +40,18 @@ public class UI {
         customerChoiceMap.put(10, "Rate product");
         customerChoiceMap.put(11, "Statistics of orders");
         return customerChoiceMap;
+    }
+
+    private Map<Integer, String> makeAdminChoiceMap() {
+        Map<Integer, String> adminChoiceMap = new HashMap<>();
+        adminChoiceMap.put(1, "Create new product");
+        adminChoiceMap.put(2, "Edit product");
+        adminChoiceMap.put(3, "Deactivate product");
+        adminChoiceMap.put(4, "Create product category");
+        adminChoiceMap.put(5, "Edit product category");
+        adminChoiceMap.put(6, "Check orders statuses");
+        adminChoiceMap.put(7, "Discount product");
+        adminChoiceMap.put(8, "Check statistics");
+        return adminChoiceMap;
     }
 }
