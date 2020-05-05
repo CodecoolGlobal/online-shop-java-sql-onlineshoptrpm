@@ -32,4 +32,8 @@ public class ProductDao extends Dao {
         }
         return products;
     }
+
+    private boolean is_availableToBool(int i){
+        return i == 1;
+    }
 }
