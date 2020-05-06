@@ -1,12 +1,12 @@
 package com.codecool.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Basket {
     private int id;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
-    public Basket(int id, ArrayList<Product> products) {
+    public Basket(int id, List<Product> products) {
         this.id = id;
         this.products = products;
     }
