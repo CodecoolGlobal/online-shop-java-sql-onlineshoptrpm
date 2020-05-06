@@ -14,6 +14,7 @@ public class Category {
         this.isAvailable = isAvailable;
     }
 
+
     public boolean isAvailable() {
         return isAvailable;
     }

@@ -23,4 +23,5 @@ public abstract class Dao {
             System.out.println("Couldn't connect to database" + e.getMessage());
         }
     }
+
 }

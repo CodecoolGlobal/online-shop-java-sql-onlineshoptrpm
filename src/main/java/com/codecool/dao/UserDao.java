@@ -24,6 +24,7 @@ public class UserDao extends Dao{
         return users;
     }
 
+
     private User createUser(ResultSet results) throws SQLException{
         int userId = results.getInt("id");
         String name = results.getString("name");

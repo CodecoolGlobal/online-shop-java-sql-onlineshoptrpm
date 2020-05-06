@@ -18,6 +18,7 @@ public class Product {
         this.category = category;
     }
 
+
     public int getId() {
         return id;
     }
