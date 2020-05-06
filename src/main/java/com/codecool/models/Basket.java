@@ -40,4 +40,8 @@ public class Basket {
     public void deleteProduct(Product product){
         products.remove(product);
     }
+
+    public void setProductQuantity(Product product, int quantity){
+        product.setAmount(quantity);
+    }
 }
