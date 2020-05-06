@@ -25,7 +25,7 @@ public class ProductDao extends Dao {
         return products;
     }
 
-    private Product createProduct(ResultSet results) throws SQLException {
+    public Product createProduct(ResultSet results) throws SQLException {
         int id = results.getInt("id");
         String name = results.getString("name");
         float price = results.getFloat("price");
