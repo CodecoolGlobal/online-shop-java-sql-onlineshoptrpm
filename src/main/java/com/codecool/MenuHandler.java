@@ -43,7 +43,7 @@ public class MenuHandler {
     public void mainMenu() {
         ui.displayMainMenu();
         ui.displayInLine(mainMenuList);
-        int userChoice = io.gatherIntInput("\nEnter a number: ", 3);
+        int userChoice = io.gatherIntInput("\nEnter a number: ",1, 3);
         mainMenu.get(userChoice).run();
     }
 
@@ -52,7 +52,7 @@ public class MenuHandler {
         String email = io.gatherInput("Enter your email: ");
         //todo add double entering email and password for checking correctness and if is already in database
         String password = io.gatherInput("Enter your password: "); //todo cover password in console with "*"
-        int phone = io.gatherIntInput("Enter your phone number: ",999999999);
+        int phone = io.gatherIntInput("Enter your phone number: ",1,999999999);
         int role = 2; //default for customer
         try {
             userDao.addUser(name, email, password, phone, role);
@@ -101,7 +101,7 @@ public class MenuHandler {
 
     private void adminPanel() {
         ui.displayAdminMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ", 12);
+        int userChoice = io.gatherIntInput("\nEnter a number: ",1, 12);
         adminMenu.get(userChoice).run();
     }
 
@@ -126,7 +126,7 @@ public class MenuHandler {
 
     private void customerPanel() {
         ui.displayCustomerMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ", 9);
+        int userChoice = io.gatherIntInput("\nEnter a number: ",1, 9);
         customerMenu.get(userChoice).run();
     }
 }

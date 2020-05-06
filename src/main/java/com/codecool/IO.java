@@ -10,7 +10,7 @@ public class IO {
         scan.useDelimiter(System.lineSeparator());
     }
 
-    public int gatherIntInput(String title, int maxRange) {
+    public int gatherIntInput(String title, int minRange, int maxRange) {
         System.out.println(title);
         String userInput;
         int userInt = 1;
@@ -20,13 +20,32 @@ public class IO {
             if (!userInput.equals("")) {
                 if (userInput.matches("^[0-9]*$")) {
                     userInt = Integer.parseInt(userInput);
-                    if (userInt > 0 && userInt <= maxRange) {
+                    if (userInt >= minRange && userInt <= maxRange) {
                         validInput = true;
                     }
                 }
             }
         }
         return userInt;
+    }
+
+    public float gatherFloatInput(String title, float minRange, float maxRange) {
+        System.out.println(title);
+        String userInput;
+        float userFloat = 1;
+        boolean validInput = false;
+        while (!validInput) {
+            userInput = scan.next();
+            if (!userInput.equals("")) {
+                if (userInput.matches("^[0-9]*$")) {
+                    userFloat = Float.parseFloat(userInput);
+                    if (userFloat >= minRange && userFloat <= maxRange) {
+                        validInput = true;
+                    }
+                }
+            }
+        }
+        return userFloat;
     }
 
     public void gatherEmptyInput(String message) {
