@@ -89,7 +89,7 @@ public class MenuHandler {
         //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
         adminMenu.put(1, productDao::addNewProduct);
-//        adminMenu.put(2, "Edit product");
+//        adminMenu.put(2, "edit product");
 //        adminMenu.put(3, "Deactivate product");
 //        adminMenu.put(4, "Create product category");
 //        adminMenu.put(5, "Edit product category");
@@ -116,8 +116,8 @@ public class MenuHandler {
 //        customerMenu.put(4, "Edit product's quantity");
 //        customerMenu.put(5, "Place an order");
 //        customerMenu.put(6, "Show my previous orders");
-//        customerMenu.put(7, "Show all available products with rates");
-//        customerMenu.put(8, "Show products by category");
+        customerMenu.put(7, productDao::showProductsWithRates);
+        customerMenu.put(8, productDao::showProductsByCategory);
 //        customerMenu.put(9, "Check availability of product");
 //        customerMenu.put(10, "Rate product");
 //        customerMenu.put(11, "Statistics of orders");
