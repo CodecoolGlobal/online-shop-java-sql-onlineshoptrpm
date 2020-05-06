@@ -2,6 +2,7 @@ package com.codecool.models;
 
 import com.codecool.IO;
 import com.codecool.dao.BasketDao;
+import com.jakewharton.fliptables.FlipTable;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -50,5 +51,14 @@ public class Basket {
 
     public void setProductQuantity(Product product, int quantity){
         product.setAmount(quantity);
+    }
+
+    public void seeAllProductsInBasket() {
+        String[] innerHeaders = { "Name", "Price", "Amount", "Total Price" };
+        String[][] innerData = { { "1", "2" , "3", "4"} };
+        String inner = FlipTable.of(innerHeaders, innerData);
+        String[] headers = { "Total Expenses: " };
+        String[][] data = { { inner} };
+        System.out.println(FlipTable.of(headers, data));
     }
 }
