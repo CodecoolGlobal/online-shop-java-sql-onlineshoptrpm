@@ -11,4 +11,7 @@ public class Basket {
         this.products = products;
     }
 
+    public Basket(int id, int productId, int orderId, int quantity) {
+
+    }
 }
