@@ -40,7 +40,7 @@ public class ProductDao extends Dao {
         IO io = new IO();
         System.out.println("You're adding new product to data base");
         String newName = io.gatherInput("Enter name of new product: ");
-        int newPrice = io.gatherIntInput("Enter new price of the product: ", 99999);
+        float newPrice = io.gatherIntInput("Enter new price of the product: ", 99999);
         int newAmount = io.gatherIntInput("Enter new amount of the product: ", 99999);
         int isNewAvailable = io.gatherIntInput("Is new product available? ", 1);
         int newCategory = io.gatherIntInput("What is category of new product? ", 7);
@@ -52,7 +52,7 @@ public class ProductDao extends Dao {
         try {
             addNewProduct = connection.prepareStatement(sql);
             addNewProduct.setString(1,newName);
-            addNewProduct.setInt(2,newPrice);
+            addNewProduct.setFloat(2,newPrice);
             addNewProduct.setInt(3,newAmount);
             addNewProduct.setInt(4,isNewAvailable);
             addNewProduct.setInt(5,newCategory);
