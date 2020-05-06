@@ -36,4 +36,8 @@ public class Basket {
         product.setAmount(amount);
         products.add(product);
     }
+
+    public void deleteProduct(Product product){
+        products.remove(product);
+    }
 }
