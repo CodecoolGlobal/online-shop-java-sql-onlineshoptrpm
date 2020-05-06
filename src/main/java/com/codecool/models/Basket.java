@@ -73,8 +73,16 @@ public class Basket {
             temp[3] = String.valueOf(product.getPrice() * product.getAmount());
             innerData.add(temp);
         }
-        String[][] data = (String[][]) innerData.toArray();
-        return data;
+        return convertTo2DArray(innerData);
+    }
+
+    private String[][] convertTo2DArray(List<String[]> innerData) {
+        String[][] array2D = new String[innerData.size()][];
+        for (int i = 0; i < array2D.length; i++) {
+            String[] row = innerData.get(i);
+            array2D[i] = row;
+        }
+        return array2D;
     }
 
     private String[] getTotalExpenses() {
