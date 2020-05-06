@@ -5,6 +5,7 @@ import com.codecool.dao.BasketDao;
 import com.jakewharton.fliptables.FlipTable;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Basket {
@@ -55,10 +56,33 @@ public class Basket {
 
     public void seeAllProductsInBasket() {
         String[] innerHeaders = { "Name", "Price", "Amount", "Total Price" };
-        String[][] innerData = { { "1", "2" , "3", "4"} };
+        String[][] innerData = createInnerData();
         String inner = FlipTable.of(innerHeaders, innerData);
-        String[] headers = { "Total Expenses: " };
-        String[][] data = { { inner} };
+        String[] headers = getTotalExpenses();
+        String[][] data = { { inner } };
         System.out.println(FlipTable.of(headers, data));
+    }
+
+    private String[][] createInnerData(){
+        List<String[]> innerData = new ArrayList<>();
+            for (Product product : products) {
+                String[] temp = new String[4];
+                temp[0] = product.getName();
+                temp[1] = String.valueOf(product.getPrice());
+                temp[2] = String.valueOf(product.getAmount());
+                temp[3] = String.valueOf(product.getPrice() * product.getAmount());
+                innerData.add(temp);
+            }
+        String[][] data = (String[][]) innerData.toArray();
+        return data;
+    }
+
+    private String[] getTotalExpenses() {
+        int totalExpenses = 0;
+        for (Product product : products) {
+            totalExpenses += (product.getPrice() * product.getAmount());
+        }
+        String[] strings = {"Total Expenses: " + totalExpenses};
+        return strings;
     }
 }
