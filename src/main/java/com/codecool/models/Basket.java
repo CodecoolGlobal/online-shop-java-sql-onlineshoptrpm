@@ -19,6 +19,10 @@ public class Basket {
         this.orderID = generateOrderID();
     }
 
+    public Basket(int id, int productId, int orderId, int quantity) {
+
+    }
+
     private int generateOrderID() throws SQLException {
         IO io = new IO();
         BasketDao basketDao = new BasketDao();
@@ -30,14 +34,10 @@ public class Basket {
         return randomInt;
     }
 
-    public Basket(int id, int productId, int orderId, int quantity) {
-
-    }
-
-    public void addProduct(Product product, int amount){
+    public void addProduct(Product product, int amount) {
         int productID = product.getId();
-        for (Product prod : products){
-            if (productID == prod.getId()){
+        for (Product prod : products) {
+            if (productID == prod.getId()) {
                 prod.setAmount(amount);
                 return;
             }
@@ -46,33 +46,33 @@ public class Basket {
         products.add(product);
     }
 
-    public void deleteProduct(Product product){
+    public void deleteProduct(Product product) {
         products.remove(product);
     }
 
-    public void setProductQuantity(Product product, int quantity){
+    public void setProductQuantity(Product product, int quantity) {
         product.setAmount(quantity);
     }
 
     public void seeAllProductsInBasket() {
-        String[] innerHeaders = { "Name", "Price", "Amount", "Total Price" };
+        String[] innerHeaders = {"Name", "Price", "Amount", "Total Price"};
         String[][] innerData = createInnerData();
         String inner = FlipTable.of(innerHeaders, innerData);
         String[] headers = getTotalExpenses();
-        String[][] data = { { inner } };
+        String[][] data = {{inner}};
         System.out.println(FlipTable.of(headers, data));
     }
 
-    private String[][] createInnerData(){
+    private String[][] createInnerData() {
         List<String[]> innerData = new ArrayList<>();
-            for (Product product : products) {
-                String[] temp = new String[4];
-                temp[0] = product.getName();
-                temp[1] = String.valueOf(product.getPrice());
-                temp[2] = String.valueOf(product.getAmount());
-                temp[3] = String.valueOf(product.getPrice() * product.getAmount());
-                innerData.add(temp);
-            }
+        for (Product product : products) {
+            String[] temp = new String[4];
+            temp[0] = product.getName();
+            temp[1] = String.valueOf(product.getPrice());
+            temp[2] = String.valueOf(product.getAmount());
+            temp[3] = String.valueOf(product.getPrice() * product.getAmount());
+            innerData.add(temp);
+        }
         String[][] data = (String[][]) innerData.toArray();
         return data;
     }
@@ -82,7 +82,6 @@ public class Basket {
         for (Product product : products) {
             totalExpenses += (product.getPrice() * product.getAmount());
         }
-        String[] strings = {"Total Expenses: " + totalExpenses};
-        return strings;
+        return new String[]{"Total Expenses: " + totalExpenses};
     }
 }
