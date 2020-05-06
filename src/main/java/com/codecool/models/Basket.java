@@ -33,6 +33,7 @@ public class Basket {
     }
 
     public void addProduct(Product product, int amount){
-
+        product.setAmount(amount);
+        products.add(product);
     }
 }
