@@ -29,6 +29,25 @@ public class IO {
         return userInt;
     }
 
+    public float gatherFloatInput(String title, float minRange, float maxRange) {
+        System.out.println(title);
+        String userInput;
+        float userFloat = 1;
+        boolean validInput = false;
+        while (!validInput) {
+            userInput = scan.next();
+            if (!userInput.equals("")) {
+                if (userInput.matches("^[0-9]*$")) {
+                    userFloat = Float.parseFloat(userInput);
+                    if (userFloat >= minRange && userFloat <= maxRange) {
+                        validInput = true;
+                    }
+                }
+            }
+        }
+        return userFloat;
+    }
+
     public void gatherEmptyInput(String message) {
         System.out.println(message);
         scan.next();

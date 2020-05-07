@@ -1,5 +1,6 @@
 package com.codecool;
 
+import com.codecool.dao.CategoryDao;
 import com.codecool.dao.ProductDao;
 import com.codecool.dao.UserDao;
 import com.codecool.models.User;
@@ -15,6 +16,7 @@ public class MenuHandler {
     private IO io;
     private UserDao userDao;
     private ProductDao productDao;
+    private CategoryDao categoryDao;
     private Map<Integer, Runnable> adminMenu;
     private Map<Integer, Runnable> customerMenu;
 
@@ -29,6 +31,7 @@ public class MenuHandler {
     private void initializeDao(){
         this.userDao = new UserDao();
         this.productDao = new ProductDao();
+        this.categoryDao = new CategoryDao();
         //todo add rest of Dao when created
     }
 
@@ -91,7 +94,7 @@ public class MenuHandler {
         adminMenu.put(1, productDao::addNewProduct);
 //        adminMenu.put(2, "edit product");
         adminMenu.put(3, productDao::deactivateProduct);
-//        adminMenu.put(4, "Create product category");
+        adminMenu.put(4, categoryDao::addNewCategory);
 //        adminMenu.put(5, "Edit product category");
 //        adminMenu.put(6, "Check orders statuses");
 //        adminMenu.put(7, "Discount product");
