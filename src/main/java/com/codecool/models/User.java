@@ -1,5 +1,7 @@
 package com.codecool.models;
 
+import java.text.AttributedString;
+
 public class User {
     private int id;
     private String name;
@@ -65,4 +67,5 @@ public class User {
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

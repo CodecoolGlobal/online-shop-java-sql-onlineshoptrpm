@@ -6,6 +6,7 @@ import com.jakewharton.fliptables.FlipTable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Basket {
@@ -14,6 +15,8 @@ public class Basket {
     private int orderID;
     private int productId;
     private int quantity;
+    private Iterator<Product> basketIterator;
+
 
     public Basket(int id, List<Product> products) throws SQLException {
         this.id = id;
@@ -28,7 +31,10 @@ public class Basket {
         this.quantity = quantity;
     }
 
-
+    public Iterator<Product> getIterator() {
+        basketIterator = new ProductIterator(products);
+        return basketIterator;
+    }
 
     private int generateOrderID() throws SQLException {
         IO io = new IO();
@@ -99,4 +105,5 @@ public class Basket {
         }
         return new String[]{"Total Expenses: " + totalExpenses};
     }
+
 }
