@@ -125,8 +125,8 @@ public class MenuHandler {
 
         customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
         customerMenu.put(2, user::addProductToBasket);
-//        customerMenu.put(3, "Remove product from basket");
-//        customerMenu.put(4, "Edit product's quantity");
+        customerMenu.put(3, user::removeProductFromBasket);
+        customerMenu.put(4, user::editProductQuantity);
 //        customerMenu.put(5, "Place an order");
 //        customerMenu.put(6, "Show my previous orders");
         customerMenu.put(7, productDao::showProductsWithRates);

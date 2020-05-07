@@ -102,7 +102,7 @@ public class User {
     }
 
     public void removeProductFromBasket(){
-        if (this.getBasket().getProducts().size() == 0 ){
+        if (this.getBasket().getProducts().size() == 0 ) {
             System.out.println("Sorry your Basket is empty.");
             return;
         }
@@ -113,5 +113,20 @@ public class User {
         int id = productID - indexDifference;
         Product product = this.getBasket().getProducts().get(id);
         this.getBasket().deleteProduct(product);
+    }
+
+    public void editProductQuantity(){
+        if (this.getBasket().getProducts().size() == 0 ) {
+            System.out.println("Sorry your Basket is empty. Nothing to edit");
+            return;
+        }
+        System.out.println("You are editing product quantity in basket");
+        this.getBasket().seeAllProductsInBasket();
+        int productID = io.gatherIntInput("Enter id of product you want to change quantity:",1, this.getBasket().getProducts().size()); //
+        int indexDifference = 1;
+        int id = productID - indexDifference;
+        Product product = this.getBasket().getProducts().get(id);
+        int amount = io.gatherIntInput("Enter new amount of product: ",1,9999); //todo max range zmienic na max dostepna w sklepie
+        this.getBasket().setProductQuantity(product, amount);
     }
 }
