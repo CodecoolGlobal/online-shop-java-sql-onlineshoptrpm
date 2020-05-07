@@ -23,6 +23,13 @@ public class User {
         this.basket.setId(basket.getOrderID());
     }
 
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
 
     public String getName() {
         return name;
