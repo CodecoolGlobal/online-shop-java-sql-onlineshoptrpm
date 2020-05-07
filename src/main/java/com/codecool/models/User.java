@@ -1,5 +1,8 @@
 package com.codecool.models;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class User {
     private int id;
     private String name;
@@ -7,14 +10,17 @@ public class User {
     private String email;
     private int phoneNumber;
     private int role;
+    private Basket basket;
 
-    public User(int id, String name, String password, String email, int phoneNumber, int role) {
+    public User(int id, String name, String password, String email, int phoneNumber, int role) throws SQLException {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
+        this.basket = new Basket(0, new ArrayList<>());
+        this.basket.setId(basket.getOrderID());
     }
 
 
