@@ -100,4 +100,18 @@ public class User {
         this.getBasket().seeAllProductsInBasket();
 
     }
+
+    public void removeProductFromBasket(){
+        if (this.getBasket().getProducts().size() == 0 ){
+            System.out.println("Sorry your Basket is empty.");
+            return;
+        }
+        System.out.println("You are removing product from basket");
+        this.getBasket().seeAllProductsInBasket();
+        int productID = io.gatherIntInput("Enter id of product:",1, this.getBasket().getProducts().size()); //
+        int indexDifference = 1;
+        int id = productID - indexDifference;
+        Product product = this.getBasket().getProducts().get(id);
+        this.getBasket().deleteProduct(product);
+    }
 }

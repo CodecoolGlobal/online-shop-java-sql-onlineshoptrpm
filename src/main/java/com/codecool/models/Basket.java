@@ -102,7 +102,7 @@ public class Basket {
     }
 
     public void seeAllProductsInBasket() {
-        String[] innerHeaders = {"Name", "Price", "Amount", "Total Price"};
+        String[] innerHeaders = {"ID","Name", "Price", "Amount", "Total Price"};
         String[][] innerData = createInnerData();
         String inner = FlipTable.of(innerHeaders, innerData);
         String[] headers = getTotalExpenses();
@@ -113,16 +113,18 @@ public class Basket {
     private String[][] createInnerData() {
         List<String[]> innerData = new ArrayList<>();
         if (products.size() != 0) {
+            int i = 1;
             for (Product product : products) {
-                String[] temp = new String[4];
-                temp[0] = product.getName();
-                temp[1] = String.valueOf(product.getPrice());
-                temp[2] = String.valueOf(product.getAmount());
-                temp[3] = String.valueOf(product.getPrice() * product.getAmount());
+                String[] temp = new String[5];
+                temp[0] = String.valueOf(i++);//todo sprawdzic czy dobrze inkrementuje
+                temp[1] = product.getName();
+                temp[2] = String.valueOf(product.getPrice());
+                temp[3] = String.valueOf(product.getAmount());
+                temp[4] = String.valueOf(product.getPrice() * product.getAmount());
                 innerData.add(temp);
             }
         } else {
-            innerData.add(new String[]{"Your", "Basket", "Is", "Empty"});
+            innerData.add(new String[]{"Sorry","Your", "Basket", "Is", "Empty"});
         }
 
         return convertTo2DArray(innerData);
@@ -138,7 +140,7 @@ public class Basket {
     }
 
     private String[] getTotalExpenses() {
-        int totalExpenses = 0;
+        float totalExpenses = 0;
         if (products.size() != 0) {
             for (Product product : products) {
                 totalExpenses += (product.getPrice() * product.getAmount());
