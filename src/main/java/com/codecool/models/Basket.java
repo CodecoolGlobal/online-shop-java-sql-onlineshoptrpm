@@ -12,6 +12,8 @@ public class Basket {
     private int id;
     private List<Product> products;
     private int orderID;
+    private int productId;
+    private int quantity;
 
     public Basket(int id, List<Product> products) throws SQLException {
         this.id = id;
@@ -20,8 +22,13 @@ public class Basket {
     }
 
     public Basket(int id, int productId, int orderId, int quantity) {
-
+        this.id = id;
+        this.productId = productId;
+        this.orderID = orderId;
+        this.quantity = quantity;
     }
+
+
 
     private int generateOrderID() throws SQLException {
         IO io = new IO();
