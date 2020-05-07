@@ -28,7 +28,9 @@ public class CategoryDao extends Dao {
         int id = results.getInt("id");
         String name = results.getString("name");
         boolean isAvailable = results.getInt("is_available") == 1;
-        return new Category(id, name, isAvailable);
+        Category category = new Category(id, name);
+        category.setAvailable(isAvailable);
+        return category;
     }
 
     public void addNewCategory() {
@@ -51,19 +53,14 @@ public class CategoryDao extends Dao {
         }
     }
 
-    public void editProductCategory() {
-        IO io = new IO();
-        CategoryDao c = new CategoryDao();
-        System.out.println("You are changing product category name");
-        int categoryID = io.gatherIntInput("Give category number to change: ",1,c.getCategories().size()); //poprawic max range
-        String newCategoryName = io.gatherInput("Give new name for category: ");
+    public void editProductCategory(Category category) {
         connect();
         PreparedStatement editProductCategory;
         String sql = "UPDATE Categories SET name = ? WHERE id = ?";
         try {
             editProductCategory = connection.prepareStatement(sql);
-            editProductCategory.setString(1,newCategoryName);
-            editProductCategory.setInt(2,categoryID);
+            editProductCategory.setString(1, category.getName());
+            editProductCategory.setInt(2, category.getId());
             editProductCategory.executeUpdate();
             editProductCategory.close();
             connection.close();
