@@ -1,5 +1,7 @@
 package com.codecool.models;
 
+import java.text.AttributedString;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
