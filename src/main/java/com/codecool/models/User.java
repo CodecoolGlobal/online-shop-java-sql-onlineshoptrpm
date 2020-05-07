@@ -1,5 +1,7 @@
 package com.codecool.models;
 
+import java.text.AttributedString;
+
 import com.codecool.IO;
 import com.codecool.dao.ProductDao;
 

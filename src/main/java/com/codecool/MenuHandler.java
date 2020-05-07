@@ -1,6 +1,7 @@
 package com.codecool;
 
 import com.codecool.dao.CategoryDao;
+import com.codecool.dao.OrdersDao;
 import com.codecool.dao.ProductDao;
 import com.codecool.dao.UserDao;
 import com.codecool.models.Category;
@@ -20,6 +21,7 @@ public class MenuHandler {
     private UserDao userDao;
     private ProductDao productDao;
     private CategoryDao categoryDao;
+    private OrdersDao ordersDao;
     private Map<Integer, Runnable> adminMenu;
     private Map<Integer, Runnable> customerMenu;
     private boolean isLogin;
@@ -36,6 +38,7 @@ public class MenuHandler {
         this.userDao = new UserDao();
         this.productDao = new ProductDao();
         this.categoryDao = new CategoryDao();
+        this.ordersDao = new OrdersDao();
         //todo add rest of Dao when created
     }
 
