@@ -61,8 +61,8 @@ public class CategoryDao extends Dao {
         String sql = "UPDATE Categories SET name = ? WHERE id = ?";
         try {
             editProductCategory = connection.prepareStatement(sql);
-            editProductCategory.setInt(1,categoryID);
-            editProductCategory.setString(2,newCategoryName);
+            editProductCategory.setString(1,newCategoryName);
+            editProductCategory.setInt(2,categoryID);
             editProductCategory.executeUpdate();
             editProductCategory.close();
             connection.close();
