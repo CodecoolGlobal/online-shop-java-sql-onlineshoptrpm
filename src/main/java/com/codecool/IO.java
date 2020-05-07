@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class IO {
     public Scanner scan;
@@ -68,5 +69,10 @@ public class IO {
             }
         } while (!validInput);
         return userInput;
+    }
+
+    public int generateRandomNumber() {
+        Random rand = new Random();
+        return rand.nextInt(9998) + 1;
     }
 }
