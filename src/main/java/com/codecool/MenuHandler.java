@@ -95,7 +95,7 @@ public class MenuHandler {
 //        adminMenu.put(2, "edit product");
         adminMenu.put(3, productDao::deactivateProduct);
         adminMenu.put(4, categoryDao::addNewCategory);
-//        adminMenu.put(5, "Edit product category");
+        adminMenu.put(5, categoryDao::editProductCategory);
 //        adminMenu.put(6, "Check orders statuses");
 //        adminMenu.put(7, "Discount product");
 //        adminMenu.put(8, "Check statistics");
