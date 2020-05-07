@@ -6,10 +6,10 @@ public class Product {
     private String name;
     private float price;
     private int amount;
-    private boolean isAvailable;
+    private int isAvailable;
     private int category;
 
-    public Product(int id, String name, float price, int amount, boolean isAvailable, int category) {
+    public Product(int id, String name, float price, int amount, int isAvailable, int category) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -35,7 +35,7 @@ public class Product {
         return amount;
     }
 
-    public boolean isAvailable() {
+    public int isAvailable() {
         return isAvailable;
     }
 
@@ -59,7 +59,7 @@ public class Product {
         this.amount = amount;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(int available) {
         isAvailable = available;
     }
 

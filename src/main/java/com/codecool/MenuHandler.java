@@ -55,7 +55,7 @@ public class MenuHandler {
         String email = io.gatherInput("Enter your email: ");
         //todo add double entering email and password for checking correctness and if is already in database
         String password = io.gatherInput("Enter your password: "); //todo cover password in console with "*"
-        int phone = io.gatherIntInput("Enter your phone number: ",1,999999999);
+        int phone = io.gatherIntInput("Enter your phone number: ",100000000, 999999999);
         int role = 2; //default for customer
         try {
             userDao.addUser(name, email, password, phone, role);
@@ -92,8 +92,8 @@ public class MenuHandler {
         //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
         adminMenu.put(1, productDao::addNewProduct);
-//        adminMenu.put(2, "Edit product");
-//        adminMenu.put(3, "Deactivate product");
+//        adminMenu.put(2, "edit product");
+        adminMenu.put(3, productDao::deactivateProduct);
         adminMenu.put(4, categoryDao::addNewCategory);
 //        adminMenu.put(5, "Edit product category");
 //        adminMenu.put(6, "Check orders statuses");
@@ -104,7 +104,7 @@ public class MenuHandler {
 
     private void adminPanel() {
         ui.displayAdminMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ",1, 12);
+        int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 12);
         adminMenu.get(userChoice).run();
     }
 
@@ -119,8 +119,8 @@ public class MenuHandler {
 //        customerMenu.put(4, "Edit product's quantity");
 //        customerMenu.put(5, "Place an order");
 //        customerMenu.put(6, "Show my previous orders");
-//        customerMenu.put(7, "Show all available products with rates");
-//        customerMenu.put(8, "Show products by category");
+        customerMenu.put(7, productDao::showProductsWithRates);
+        customerMenu.put(8, productDao::showProductsByCategory);
 //        customerMenu.put(9, "Check availability of product");
 //        customerMenu.put(10, "Rate product");
 //        customerMenu.put(11, "Statistics of orders");
@@ -129,7 +129,7 @@ public class MenuHandler {
 
     private void customerPanel() {
         ui.displayCustomerMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ",1, 9);
+        int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 9);
         customerMenu.get(userChoice).run();
     }
 }
