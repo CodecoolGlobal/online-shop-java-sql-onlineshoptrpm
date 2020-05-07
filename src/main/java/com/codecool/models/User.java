@@ -98,7 +98,6 @@ public class User {
         this.getBasket().addProduct(product,amount);
         //added to test
         this.getBasket().seeAllProductsInBasket();
-
     }
 
     public void removeProductFromBasket(){

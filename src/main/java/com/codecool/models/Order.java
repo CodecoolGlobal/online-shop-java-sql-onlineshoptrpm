@@ -1,6 +1,5 @@
 package com.codecool.models;
 
-
 import java.util.Date;
 
 public class Order {
@@ -19,7 +18,6 @@ public class Order {
         this.orderPayAt = orderPayAt;
         this.orderStatus = orderStatus;
     }
-
 
     public int getId() {
         return id;

@@ -2,7 +2,6 @@ package com.codecool.dao;
 
 import com.codecool.models.Basket;
 import com.codecool.models.Product;
-import com.codecool.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,12 +11,11 @@ import java.util.List;
 
 public class BasketDao extends Dao {
 
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     public BasketDao(){
         this.productDao = new ProductDao();
     }
-
 
     public List<Basket> getBaskets() {
         List<Basket> baskets = new ArrayList<>();

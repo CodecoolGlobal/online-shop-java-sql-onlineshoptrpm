@@ -1,23 +1,15 @@
 package com.codecool.dao;
 
-import com.codecool.IO;
-import com.codecool.models.Category;
 import com.codecool.models.Product;
-import com.jakewharton.fliptables.FlipTable;
 import com.jakewharton.fliptables.FlipTableConverters;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ProductDao extends Dao {
-
-    private IO io;
-
-    public ProductDao() {
-        this.io = new IO();
-    }
 
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
@@ -47,14 +39,6 @@ public class ProductDao extends Dao {
     }
 
     public void addNewProduct(Product product){
-//        System.out.println("You're adding new product to data base");
-//        String newName = io.gatherInput("Enter name of new product: ");
-//        float newPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
-//        int newAmount = io.gatherIntInput("Enter new amount of the product: ",0, 99999);
-//        int isNewAvailable = io.gatherIntInput("Is new product available? ",0, 1);
-//        int newCategory = io.gatherIntInput("What is category of new product? ",1, 7);
-//        int newRating = 0;
-//        int newNoRates = 0;
         connect();
         PreparedStatement addNewProduct;
         String sql = "INSERT INTO Products (name, price, amount, is_available, category_id, rating, no_rates) VALUES (?, ?, ?, ?, ?, ?, ?)";

@@ -1,6 +1,5 @@
 package com.codecool.dao;
 
-import com.codecool.IO;
 import com.codecool.models.Category;
 import com.jakewharton.fliptables.FlipTableConverters;
 

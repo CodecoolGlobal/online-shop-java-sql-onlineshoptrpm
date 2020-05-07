@@ -15,8 +15,8 @@ public class MenuHandler {
     public boolean isRunning;
     private Map<Integer, Runnable> mainMenu;
     private String[] mainMenuList;
-    private UI ui;
-    private IO io;
+    private final UI ui;
+    private final IO io;
     private UserDao userDao;
     private ProductDao productDao;
     private CategoryDao categoryDao;
@@ -69,7 +69,6 @@ public class MenuHandler {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void login() {
@@ -168,7 +167,6 @@ public class MenuHandler {
         //customerMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         customerMenu = new HashMap<>();
         //customerMenu.put(1, this::createNewUser); // left as example
-
         customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
         customerMenu.put(2, user::addProductToBasket);
         customerMenu.put(3, user::removeProductFromBasket);
@@ -202,5 +200,4 @@ public class MenuHandler {
         isLogin = false;
         System.out.println("\nYou will be logged out\n");
     }
-
 }

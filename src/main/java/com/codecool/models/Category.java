@@ -18,7 +18,6 @@ public class Category {
 //        this.newCategoryName = newCategoryName;
     }
 
-
     public int isAvailable() {
         return 1;
     }

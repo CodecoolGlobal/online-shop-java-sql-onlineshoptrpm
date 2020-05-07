@@ -1,7 +1,5 @@
 package com.codecool;
 
-import com.jakewharton.fliptables.FlipTable;
-
 import java.util.HashMap;
 import java.util.Map;
 
