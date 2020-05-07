@@ -63,10 +63,10 @@ public class MenuHandler {
         String email = io.gatherInput("Enter your email: ");
         //todo add double entering email and password for checking correctness and if is already in database
         String password = io.gatherInput("Enter your password: "); //todo cover password in console with "*"
-        int phone = io.gatherIntInput("Enter your phone number: ",100000000, 999999999);
+        int phone = io.gatherIntInput("Enter your phone number: ",0, 999999999);
         int role = 2; //default for customer
         try {
-            User user = new User(0, name, email, password, phone, role);
+            User user = new User(0, name, password, email, phone, role);
             userDao.addUser(user);
             io.gatherEmptyInput("Account successfully created!\nPress any key to back to main menu.");
         }
