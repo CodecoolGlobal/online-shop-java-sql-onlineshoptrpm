@@ -5,6 +5,8 @@ import java.text.AttributedString;
 import com.codecool.IO;
 import com.codecool.dao.ProductDao;
 
+import java.text.AttributedString;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
