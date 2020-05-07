@@ -20,6 +20,7 @@ public class MenuHandler {
     private CategoryDao categoryDao;
     private Map<Integer, Runnable> adminMenu;
     private Map<Integer, Runnable> customerMenu;
+    private boolean isLogin;
 
     public MenuHandler() {
         this.isRunning = true;
@@ -74,6 +75,7 @@ public class MenuHandler {
         String email = io.gatherInput("Enter Email: ");
         String password = io.gatherInput("Enter Password: ");
         User user = userDao.getUser(email, password);
+        isLogin = true;
         switch (user.getRole()) {
             case 1:
                 initializeAdminMenu(user);
@@ -101,7 +103,7 @@ public class MenuHandler {
 //        adminMenu.put(6, "Check orders statuses");
 //        adminMenu.put(7, "Discount product");
 //        adminMenu.put(8, "Check statistics");
-//        adminMenu.put(9, "Logout");
+        adminMenu.put(9, this::isLogin);
     }
 
     private void getCategoryData() {
@@ -113,9 +115,11 @@ public class MenuHandler {
     }
 
     private void adminPanel() {
-        ui.displayAdminMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 12);
-        adminMenu.get(userChoice).run();
+        while(isLogin){
+            ui.displayAdminMenu();
+            int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 9);
+            adminMenu.get(userChoice).run();
+        }
     }
 
     private void initializeCustomerMenu(User user) {
@@ -123,10 +127,10 @@ public class MenuHandler {
         customerMenu = new HashMap<>();
         //customerMenu.put(1, this::createNewUser); // left as example
 
-//        customerMenu.put(1, "Show my basket");
-//        customerMenu.put(2, "Add product to basket");
-//        customerMenu.put(3, "Remove product from basket");
-//        customerMenu.put(4, "Edit product's quantity");
+        customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
+        customerMenu.put(2, user::addProductToBasket);
+        customerMenu.put(3, user::removeProductFromBasket);
+        customerMenu.put(4, user::editProductQuantity);
 //        customerMenu.put(5, "Place an order");
 //        customerMenu.put(6, "Show my previous orders");
         customerMenu.put(7, productDao::showProductsWithRates);
@@ -134,12 +138,20 @@ public class MenuHandler {
 //        customerMenu.put(9, "Check availability of product");
 //        customerMenu.put(10, "Rate product");
 //        customerMenu.put(11, "Statistics of orders");
-//        customerMenu.put(12, "Logout");
+        customerMenu.put(12, this::isLogin);
     }
 
     private void customerPanel() {
-        ui.displayCustomerMenu();
-        int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 9);
-        customerMenu.get(userChoice).run();
+        while(isLogin) {
+            ui.displayCustomerMenu();
+            int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 12);
+            customerMenu.get(userChoice).run();
+        }
     }
+
+    private void isLogin() {
+        isLogin = false;
+        System.out.println("\nYou will be logged out\n");
+    }
+
 }
