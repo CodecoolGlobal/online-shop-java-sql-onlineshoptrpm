@@ -13,6 +13,12 @@ import java.util.Scanner;
 
 public class ProductDao extends Dao {
 
+    private IO io;
+
+    public ProductDao() {
+        this.io = new IO();
+    }
+
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         connect();
@@ -41,7 +47,6 @@ public class ProductDao extends Dao {
     }
 
     public void addNewProduct(){
-        IO io = new IO();
         System.out.println("You're adding new product to data base");
         String newName = io.gatherInput("Enter name of new product: ");
         float newPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
@@ -89,7 +94,6 @@ public class ProductDao extends Dao {
         System.out.println("Choose category: ");
         for (Category category: c.getCategories())
             System.out.println(category.getId() + " " + category.getName());
-        IO io = new IO();
         int choice = io.gatherIntInput("Enter number of category: ",1, c.getCategories().size());
         String sql = "SELECT Products.name as Name\n" +
                 "FROM Products\n" +
@@ -107,14 +111,12 @@ public class ProductDao extends Dao {
     }
 
     public void deactivateProduct() {
-        connect();
         showAllProducts();
         PreparedStatement rs;
-        ProductDao product = new ProductDao();
-        IO io = new IO();
-        int choiceID = io.gatherIntInput("Enter ID of product: ", 1, product.getProducts().size());
+        int choiceID = io.gatherIntInput("Enter ID of product: ", 1, getProducts().size());
         int choice = io.gatherIntInput("1 - activate product\n0 - deactivate product", 0, 1);
         String sql = "UPDATE Products SET is_available = " + choice + " WHERE id = " + choiceID + "";
+        connect();
         try {
             rs = connection.prepareStatement(sql);
             rs.executeUpdate();
@@ -132,6 +134,9 @@ public class ProductDao extends Dao {
         try {
             ResultSet rs  = statement.executeQuery(sql);
             System.out.println(FlipTableConverters.fromResultSet(rs));
+            rs.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
