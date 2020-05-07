@@ -53,8 +53,9 @@ public class CategoryDao extends Dao {
 
     public void editProductCategory() {
         IO io = new IO();
+        CategoryDao c = new CategoryDao();
         System.out.println("You are changing product category name");
-        int categoryID = io.gatherIntInput("Give category number to change: ",1,9); //poprawic max range
+        int categoryID = io.gatherIntInput("Give category number to change: ",1,c.getCategories().size()); //poprawic max range
         String newCategoryName = io.gatherInput("Give new name for category: ");
         connect();
         PreparedStatement editProductCategory;
