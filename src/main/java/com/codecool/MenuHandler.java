@@ -3,6 +3,7 @@ package com.codecool;
 import com.codecool.dao.CategoryDao;
 import com.codecool.dao.ProductDao;
 import com.codecool.dao.UserDao;
+import com.codecool.models.Category;
 import com.codecool.models.User;
 
 import java.util.HashMap;
@@ -58,7 +59,8 @@ public class MenuHandler {
         int phone = io.gatherIntInput("Enter your phone number: ",100000000, 999999999);
         int role = 2; //default for customer
         try {
-            userDao.addUser(name, email, password, phone, role);
+            User user = new User(0, name, email, password, phone, role);
+            userDao.addUser(user);
             io.gatherEmptyInput("Account successfully created!\nPress any key to back to main menu.");
         }
         catch (Exception e) {
@@ -95,11 +97,19 @@ public class MenuHandler {
         adminMenu.put(2, productDao::editProduct);
         adminMenu.put(3, productDao::deactivateProduct);
         adminMenu.put(4, categoryDao::addNewCategory);
-        adminMenu.put(5, categoryDao::editProductCategory);
+        adminMenu.put(5, this::getCategoryData);
 //        adminMenu.put(6, "Check orders statuses");
 //        adminMenu.put(7, "Discount product");
 //        adminMenu.put(8, "Check statistics");
 //        adminMenu.put(9, "Logout");
+    }
+
+    private void getCategoryData() {
+        CategoryDao c = new CategoryDao();
+        System.out.println("You are changing product category name");
+        int id = io.gatherIntInput("Give category number to change: ",1,c.getCategories().size()); //poprawic max range
+        String name = io.gatherInput("Give new name for category: ");
+        c.editProductCategory(new Category(id, name));
     }
 
     private void adminPanel() {

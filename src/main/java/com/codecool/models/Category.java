@@ -10,10 +10,10 @@ public class Category {
 //    private int categoryID;
 //    private String newCategoryName;
 
-    public Category(int id, String name, boolean isAvailable) {
+    public Category(int id, String name) {
         this.id = id;
         this.name = name;
-        this.isAvailable = isAvailable;
+        this.isAvailable = true;
 //        this.categoryID = categoryID;
 //        this.newCategoryName = newCategoryName;
     }
