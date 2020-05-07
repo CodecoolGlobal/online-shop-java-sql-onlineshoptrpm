@@ -171,7 +171,7 @@ public class MenuHandler {
         //customerMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         customerMenu = new HashMap<>();
         //customerMenu.put(1, this::createNewUser); // left as example
-        customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
+        customerMenu.put(1, user::seeAllProductsInBasket);
         customerMenu.put(2, user::addProductToBasket);
         customerMenu.put(3, user::removeProductFromBasket);
         customerMenu.put(4, user::editProductQuantity);

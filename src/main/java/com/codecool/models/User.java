@@ -4,6 +4,7 @@ import com.codecool.IO;
 import com.codecool.dao.BasketDao;
 import com.codecool.dao.OrdersDao;
 import com.codecool.dao.ProductDao;
+import com.jakewharton.fliptables.FlipTable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class User {
         int amount = io.gatherIntInput("Enter amount of product: ",1,9999); //todo max range zmienic na max dostepna w sklepie
         this.getBasket().addProduct(product,amount);
         //added to test
-        this.getBasket().seeAllProductsInBasket();
+        seeAllProductsInBasket();
     }
 
     public void removeProductFromBasket(){
@@ -112,7 +113,7 @@ public class User {
             return;
         }
         System.out.println("You are removing product from basket");
-        this.getBasket().seeAllProductsInBasket();
+        seeAllProductsInBasket();
         int productID = io.gatherIntInput("Enter id of product:",1, this.getBasket().getProducts().size()); //
         int indexDifference = 1;
         int id = productID - indexDifference;
@@ -126,7 +127,7 @@ public class User {
             return;
         }
         System.out.println("You are editing product quantity in basket");
-        this.getBasket().seeAllProductsInBasket();
+        seeAllProductsInBasket();
         int productID = io.gatherIntInput("Enter id of product you want to change quantity:",1, this.getBasket().getProducts().size()); //
         int indexDifference = 1;
         int id = productID - indexDifference;
@@ -147,5 +148,52 @@ public class User {
             e.printStackTrace();
         }
 
+    }
+    public void seeAllProductsInBasket() {
+        String[] innerHeaders = {"ID","Name", "Price", "Amount", "Total Price"};
+        String[][] innerData = createInnerData();
+        String inner = FlipTable.of(innerHeaders, innerData);
+        String[] headers = getTotalExpenses();
+        String[][] data = {{inner}};
+        System.out.println(FlipTable.of(headers, data));
+    }
+
+    private String[][] createInnerData() {
+        List<String[]> innerData = new ArrayList<>();
+        if (getBasket().getProducts().size() != 0) {
+            int i = 1;
+            for (Product product : getBasket().getProducts()) {
+                String[] temp = new String[5];
+                temp[0] = String.valueOf(i++);//todo sprawdzic czy dobrze inkrementuje
+                temp[1] = product.getName();
+                temp[2] = String.valueOf(product.getPrice());
+                temp[3] = String.valueOf(product.getAmount());
+                temp[4] = String.valueOf(product.getPrice() * product.getAmount());
+                innerData.add(temp);
+            }
+        } else {
+            innerData.add(new String[]{"Sorry","Your", "Basket", "Is", "Empty"});
+        }
+
+        return convertTo2DArray(innerData);
+    }
+
+    private String[][] convertTo2DArray(List<String[]> innerData) {
+        String[][] array2D = new String[innerData.size()][];
+        for (int i = 0; i < array2D.length; i++) {
+            String[] row = innerData.get(i);
+            array2D[i] = row;
+        }
+        return array2D;
+    }
+
+    private String[] getTotalExpenses() {
+        float totalExpenses = 0;
+        if (getBasket().getProducts().size() != 0) {
+            for (Product product : getBasket().getProducts()) {
+                totalExpenses += (product.getPrice() * product.getAmount());
+            }
+        }
+        return new String[]{"Total Expenses: " + totalExpenses};
     }
 }

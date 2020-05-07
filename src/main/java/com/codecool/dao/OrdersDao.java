@@ -1,26 +1,18 @@
 package com.codecool.dao;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import java.time.LocalDate;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
-
 import com.codecool.models.Order;
 import com.codecool.models.OrderStatus;
-import com.codecool.models.Product;
 import com.codecool.models.User;
 
 public class OrdersDao extends Dao {
 
-//    private Connection connection;
     private List<Order> orders;
 
     public OrdersDao() {
@@ -32,12 +24,13 @@ public class OrdersDao extends Dao {
         return orders;
     }
 
-    public void addOrder(User user) throws SQLException {
+    public void addOrder(User user) {
         connect();
         String insertOrderString = "INSERT INTO Orders\n"
                 + "(user_id, created_at, paid_at, status_id)\n"
                 + "VALUES (?, ?, ?, ?)";
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             PreparedStatement insertOrder;
             try {
                 insertOrder = connection.prepareStatement(insertOrderString);
@@ -69,28 +62,6 @@ public class OrdersDao extends Dao {
                 e.printStackTrace();
             }
         }
-
-//    public boolean isValid(int orderId) {
-//        for (Order order : orders) {
-//            if (order.getOrderId() == orderId) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    private int getIncrementedOrderId() {
-//        int orderId;
-//
-//        if (orders.isEmpty()) {
-//            orderId = 1;
-//        } else {
-//            orders.sort(Order::compareTo);
-//            orderId = orders.get(orders.size()-1).getOrderId() + 1;
-//        }
-//        return orderId;
-//    }
-
 
         private void addOrderData () {
             connect();
