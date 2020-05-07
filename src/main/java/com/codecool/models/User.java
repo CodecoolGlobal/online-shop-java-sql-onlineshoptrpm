@@ -19,7 +19,7 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
-        this.basket = new Basket(0, new ArrayList<>());
+        this.basket = new Basket(0, null);
         this.basket.setId(basket.getOrderID());
     }
 
