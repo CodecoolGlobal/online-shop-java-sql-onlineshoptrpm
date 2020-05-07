@@ -36,30 +36,26 @@ public class OrdersDao extends Dao {
         LocalDate localDate = LocalDate.now();
         connect();
         PreparedStatement insertOrder;
-        String insertOrderString = "INSERT INTO OrderDetails"
-                + "(OrderID, ProductID, ProductName, ProductAmount, ProductAmountPrice, UserID, Date, Status)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertOrderString = "INSERT INTO Orders"
+                + "(user_id, created_at, paid_at, status_id)"
+                + "VALUES (?, ?, ?, ?)";
 
         String date = localDate.getDayOfMonth() + "-" + localDate.getMonthValue() + "-" + localDate.getYear();
         int orderId = getIncrementedOrderId();
         while (basketIterator.hasNext()) {
             Product currentProduct = basketIterator.next();
-            String productName = currentProduct.getName();
-            int productId = currentProduct.getId();
-            int productAmount = currentProduct.getAmount();
-            int productAmountPrice = (int) (currentProduct.getAmount() * currentProduct.getPrice());
+//            String productName = currentProduct.getName();
+//            int productId = currentProduct.getId();
+//            int productAmount = currentProduct.getAmount();
+//            int productAmountPrice = (int) (currentProduct.getAmount() * currentProduct.getPrice());
             int userId = user.getId();
 
             try {
                 insertOrder = connection.prepareStatement(insertOrderString);
-                insertOrder.setInt(1, orderId);
-                insertOrder.setInt(2, productId);
-                insertOrder.setString(3, productName);
-                insertOrder.setInt(4, productAmount);
-                insertOrder.setInt(5, productAmountPrice);
-                insertOrder.setInt(6, userId);
-                insertOrder.setString(7, date);
-                insertOrder.setString(8, OrderStatus.PENDING.name());
+                insertOrder.setInt(1, userId);
+                insertOrder.setInt(2, orderId);
+                insertOrder.setString(3, date);
+                insertOrder.setString(4, OrderStatus.PENDING.name());
                 insertOrder.executeUpdate();
                 insertOrder.close();
                 connection.close();
@@ -72,7 +68,7 @@ public class OrdersDao extends Dao {
     public void updateOrderStatus(int orderId, String status) {
         connect();
         PreparedStatement updateOrderStatus;
-        String updateOrderStatusString = "UPDATE OrderDetails SET Status = ? WHERE OrderID = ?";
+        String updateOrderStatusString = "UPDATE Orders SET Status = ? WHERE OrderID = ?";
         try {
             updateOrderStatus = connection.prepareStatement(updateOrderStatusString);
             updateOrderStatus.setInt(2, orderId);
@@ -111,17 +107,17 @@ public class OrdersDao extends Dao {
         connect();
         Order order;
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderDetails;");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Baskets b, Products p\n" +
+                    "WHERE p.id = b.order_id;");
             while (resultSet.next()) {
-                int orderId = resultSet.getInt("OrderID");
-                int productId = resultSet.getInt("ProductID");
-                String productName = resultSet.getString("ProductName");
-                int productAmount = resultSet.getInt("ProductAmount");
-                int productAmountPrice = resultSet.getInt("ProductAmountPrice");
-                int userId = resultSet.getInt("UserID");
-                String date = resultSet.getString("Date");
-                String status = resultSet.getString("Status");
+                int orderId = resultSet.getInt("id");
+                int productId = resultSet.getInt("product_id");
+                String productName = resultSet.getString("name");
+                int productAmount = resultSet.getInt("quantity");
+                int productAmountPrice = productAmount * resultSet.getInt("price");
+                int userId = resultSet.getInt("user_id");
+                String date = resultSet.getString("date");
+                String status = resultSet.getString("status");
 
                 order = new Order.Builder()
                         .withOrderId(orderId)
