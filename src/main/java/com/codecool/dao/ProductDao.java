@@ -65,5 +65,4 @@ public class ProductDao extends Dao {
             e.printStackTrace();
         }
     }
-
 }

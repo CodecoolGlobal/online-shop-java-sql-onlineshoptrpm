@@ -50,4 +50,24 @@ public class CategoryDao extends Dao {
             e.printStackTrace();
         }
     }
+
+    public void editProductCategory() {
+        IO io = new IO();
+        System.out.println("You are changing product category name");
+        int categoryID = io.gatherIntInput("Give category number to change: ",1,9); //poprawic max range
+        String newCategoryName = io.gatherInput("Give new name for category: ");
+        connect();
+        PreparedStatement editProductCategory;
+        String sql = "UPDATE Categories SET name = ? WHERE id = ?";
+        try {
+            editProductCategory = connection.prepareStatement(sql);
+            editProductCategory.setInt(1,categoryID);
+            editProductCategory.setString(2,newCategoryName);
+            editProductCategory.executeUpdate();
+            editProductCategory.close();
+            connection.close();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
