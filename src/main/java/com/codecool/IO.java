@@ -3,7 +3,9 @@ package com.codecool;
 import java.util.Scanner;
 import java.util.Random;
 
-public class IO {
+import static jdk.nashorn.internal.runtime.JSType.isNumber;
+
+public class IO<userFloat> {
     public Scanner scan;
 
     public IO() {
@@ -30,6 +32,10 @@ public class IO {
         return userInt;
     }
 
+    public boolean isNumber(String input) {
+        return !input.equals("") && input.matches("^[0-9]*$");
+    }
+
     public float gatherFloatInput(String title, float minRange, float maxRange) {
         System.out.println(title);
         String userInput;
@@ -37,12 +43,10 @@ public class IO {
         boolean validInput = false;
         while (!validInput) {
             userInput = scan.next();
-            if (!userInput.equals("")) {
-                if (userInput.matches("^[0-9]*$")) {
-                    userFloat = Float.parseFloat(userInput);
-                    if (userFloat >= minRange && userFloat <= maxRange) {
-                        validInput = true;
-                    }
+            if (isNumber(userInput)) {
+                userFloat = Float.parseFloat(userInput);
+                if (userFloat >= minRange && userFloat <= maxRange) {
+                    validInput = true;
                 }
             }
         }

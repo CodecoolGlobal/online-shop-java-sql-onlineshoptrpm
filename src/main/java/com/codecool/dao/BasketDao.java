@@ -45,7 +45,9 @@ public class BasketDao extends Dao {
         List<Product> productsInBasket = new ArrayList<>();
         connect();
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Baskets WHERE order_id = ?;");
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT p.*, b.quantity FROM Baskets b " +
+                            "JOIN Products p ON p.id = b.product_id WHERE order_id = 1;");
             statement.setInt(1, order_id);
             ResultSet results = statement.executeQuery();
             //List<Product> products = productDao.getProducts();
