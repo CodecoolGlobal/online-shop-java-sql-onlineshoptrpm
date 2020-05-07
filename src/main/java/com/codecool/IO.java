@@ -3,9 +3,8 @@ package com.codecool;
 import java.util.Scanner;
 import java.util.Random;
 
-import static jdk.nashorn.internal.runtime.JSType.isNumber;
 
-public class IO<userFloat> {
+public class IO {
     public Scanner scan;
 
     public IO() {

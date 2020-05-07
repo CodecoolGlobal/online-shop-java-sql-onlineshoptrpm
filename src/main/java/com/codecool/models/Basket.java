@@ -71,11 +71,13 @@ public class Basket {
     private int generateOrderID() throws SQLException {
         IO io = new IO();
         BasketDao basketDao = new BasketDao();
-        int randomInt;
+        int randomInt = 1;
         List<Integer> forbiddenInts = basketDao.getAllOrdersID();
-        do {
-            randomInt = io.generateRandomNumber();
-        } while (!forbiddenInts.contains(randomInt));
+        if (forbiddenInts.size() != 0) {
+            do {
+                randomInt = io.generateRandomNumber();
+            } while (!forbiddenInts.contains(randomInt));
+        }
         return randomInt;
     }
 
