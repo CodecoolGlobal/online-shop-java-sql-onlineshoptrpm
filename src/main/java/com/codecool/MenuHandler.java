@@ -4,9 +4,11 @@ import com.codecool.dao.CategoryDao;
 import com.codecool.dao.ProductDao;
 import com.codecool.dao.UserDao;
 import com.codecool.models.Category;
+import com.codecool.models.Product;
 import com.codecool.models.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MenuHandler {
@@ -95,9 +97,9 @@ public class MenuHandler {
     private void initializeAdminMenu(User user) {
         //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
-        adminMenu.put(1, productDao::addNewProduct);
-        adminMenu.put(2, productDao::editProduct);
-        adminMenu.put(3, productDao::deactivateProduct);
+        adminMenu.put(1, this::addNewProductData);
+        adminMenu.put(2, this::editProductData);
+        adminMenu.put(3, this::deactivateProductData);
         adminMenu.put(4, this::getNewCategoryData);
         adminMenu.put(5, this::getCategoryData);
 //        adminMenu.put(6, "Check orders statuses");
@@ -107,19 +109,51 @@ public class MenuHandler {
     }
 
     private void getCategoryData() {
-        CategoryDao c = new CategoryDao();
         System.out.println("You are changing product category name");
-        int id = io.gatherIntInput("Give category number to change: ",1,c.getCategories().size()); //poprawic max range
+        int id = io.gatherIntInput("Give category number to change: ",1,categoryDao.getCategories().size()); //poprawic max range
         String name = io.gatherInput("Give new name for category: ");
-        c.editProductCategory(new Category(id, name));
+        categoryDao.editProductCategory(new Category(id, name));
     }
 
     private void getNewCategoryData() {
-        CategoryDao c = new CategoryDao();
         System.out.println("You're adding new category to database");
         String newCategory = io.gatherInput("Enter name of new category: ");
         int isNewCatAvailable = io.gatherIntInput("Is new category available?: ",0,1);
-        c.addNewCategory(new Category(isNewCatAvailable, newCategory));
+        categoryDao.addNewCategory(new Category(isNewCatAvailable, newCategory));
+    }
+
+    private void showProductsByCategoryData() {
+        System.out.println("Choose category: ");
+        for (Category category: categoryDao.getCategories())
+            System.out.println(category.getId() + " " + category.getName());
+        int choice = io.gatherIntInput("Enter number of category: ",1, categoryDao.getCategories().size());
+        productDao.showProductsByCategory(choice);
+    }
+
+    private void editProductData() {
+        System.out.println("Editing product");
+        productDao.showAllProducts();
+        List<Product> products = productDao.getProducts();
+        int id = io.gatherIntInput("Enter ID of product to change: ",1, productDao.getProducts().size())-1;
+        Product product = products.get(id);
+        String name = io.gatherInput("Enter new name of the product: ");
+        product.setName(name);
+        float price = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
+        product.setPrice(price);
+        int amount = io.gatherIntInput("Enter new amount of the product: ", 0, 99999);
+        product.setAmount(amount);
+        productDao.editProduct(product);
+    }
+
+    private void addNewProductData() {
+        System.out.println("You're adding new product to data base");
+        String name = io.gatherInput("Enter name of new product: ");
+        float price = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, (float) 99999);
+        int amount = io.gatherIntInput("Enter new amount of the product: ",0, 99999);
+        int isNewAvailable = io.gatherIntInput("Is new product available? ",0, 1);
+        categoryDao.showAllCategories();
+        int category = io.gatherIntInput("What is category of new product? ",1, 7);
+        productDao.addNewProduct(new Product(0,name,price,amount,isNewAvailable,category));
     }
 
     private void adminPanel() {
@@ -142,11 +176,18 @@ public class MenuHandler {
 //        customerMenu.put(5, "Place an order");
 //        customerMenu.put(6, "Show my previous orders");
         customerMenu.put(7, productDao::showProductsWithRates);
-        customerMenu.put(8, productDao::showProductsByCategory);
+        customerMenu.put(8, this::showProductsByCategoryData);
 //        customerMenu.put(9, "Check availability of product");
 //        customerMenu.put(10, "Rate product");
 //        customerMenu.put(11, "Statistics of orders");
         customerMenu.put(12, this::isLogin);
+    }
+
+    private void deactivateProductData() {
+        productDao.showAllProducts();
+        int choiceID = io.gatherIntInput("Enter ID of product: ", 1, productDao.getProducts().size());
+        int choice = io.gatherIntInput("1 - activate product\n0 - deactivate product", 0, 1);
+        productDao.deactivateProduct(choiceID, choice);
     }
 
     private void customerPanel() {

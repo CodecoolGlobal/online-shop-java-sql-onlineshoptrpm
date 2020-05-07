@@ -46,13 +46,13 @@ public class ProductDao extends Dao {
         return new Product(id, name, price, amount, is_available, category_id);
     }
 
-    public void addNewProduct(){
-        System.out.println("You're adding new product to data base");
-        String newName = io.gatherInput("Enter name of new product: ");
-        float newPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
-        int newAmount = io.gatherIntInput("Enter new amount of the product: ",0, 99999);
-        int isNewAvailable = io.gatherIntInput("Is new product available? ",0, 1);
-        int newCategory = io.gatherIntInput("What is category of new product? ",1, 7);
+    public void addNewProduct(Product product){
+//        System.out.println("You're adding new product to data base");
+//        String newName = io.gatherInput("Enter name of new product: ");
+//        float newPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
+//        int newAmount = io.gatherIntInput("Enter new amount of the product: ",0, 99999);
+//        int isNewAvailable = io.gatherIntInput("Is new product available? ",0, 1);
+//        int newCategory = io.gatherIntInput("What is category of new product? ",1, 7);
 //        int newRating = 0;
 //        int newNoRates = 0;
         connect();
@@ -60,11 +60,11 @@ public class ProductDao extends Dao {
         String sql = "INSERT INTO Products (name, price, amount, is_available, category_id, rating, no_rates) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             addNewProduct = connection.prepareStatement(sql);
-            addNewProduct.setString(1,newName);
-            addNewProduct.setFloat(2,newPrice);
-            addNewProduct.setInt(3,newAmount);
-            addNewProduct.setInt(4,isNewAvailable);
-            addNewProduct.setInt(5,newCategory);
+            addNewProduct.setString(1,product.getName());
+            addNewProduct.setFloat(2,product.getPrice());
+            addNewProduct.setInt(3,product.getAmount());
+            addNewProduct.setInt(4,product.isAvailable());
+            addNewProduct.setInt(5,product.getCategory());
             addNewProduct.setInt(6,0);
             addNewProduct.setInt(7,0);
             addNewProduct.executeUpdate();
@@ -89,12 +89,7 @@ public class ProductDao extends Dao {
         }
     }
 
-    public void showProductsByCategory(){
-        CategoryDao c = new CategoryDao();
-        System.out.println("Choose category: ");
-        for (Category category: c.getCategories())
-            System.out.println(category.getId() + " " + category.getName());
-        int choice = io.gatherIntInput("Enter number of category: ",1, c.getCategories().size());
+    public void showProductsByCategory(int choice){
         String sql = "SELECT Products.name as Name\n" +
                 "FROM Products\n" +
                 "INNER JOIN Categories ON Products.category_id = Categories.id WHERE Categories.id = "+choice+"";
@@ -110,11 +105,8 @@ public class ProductDao extends Dao {
         }
     }
 
-    public void deactivateProduct() {
-        showAllProducts();
+    public void deactivateProduct(int choiceID, int choice) {
         PreparedStatement rs;
-        int choiceID = io.gatherIntInput("Enter ID of product: ", 1, getProducts().size());
-        int choice = io.gatherIntInput("1 - activate product\n0 - deactivate product", 0, 1);
         String sql = "UPDATE Products SET is_available = " + choice + " WHERE id = " + choiceID + "";
         connect();
         try {
@@ -142,22 +134,16 @@ public class ProductDao extends Dao {
         }
     }
 
-    public void editProduct() {
-        System.out.println("Editing product");
-        showAllProducts();
-        int productID = io.gatherIntInput("Enter ID of product to change: ",1, getProducts().size());
-        String newProductName = io.gatherInput("Enter new name of the product: ");
-        float newProductPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
-        int newProductAmount = io.gatherIntInput("Enter new amount of the product: ", 0, 99999);
+    public void editProduct(Product product) {
         PreparedStatement editProduct;
         connect();
         String sql = "UPDATE Products SET name = ?, price = ?, amount = ? WHERE id = ?";
         try {
             editProduct = connection.prepareStatement(sql);
-            editProduct.setString(1, newProductName);
-            editProduct.setFloat(2, newProductPrice);
-            editProduct.setInt(3, newProductAmount);
-            editProduct.setInt(4, productID);
+            editProduct.setString(1, product.getName());
+            editProduct.setFloat(2, product.getPrice());
+            editProduct.setInt(3, product.getAmount());
+            editProduct.setInt(4, product.getId());
             editProduct.executeUpdate();
             editProduct.close();
             connection.close();

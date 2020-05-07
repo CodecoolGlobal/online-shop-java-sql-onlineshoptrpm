@@ -2,6 +2,7 @@ package com.codecool.dao;
 
 import com.codecool.IO;
 import com.codecool.models.Category;
+import com.jakewharton.fliptables.FlipTableConverters;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,20 @@ public class CategoryDao extends Dao {
             e.printStackTrace();
         }
         return categories;
+    }
+
+    public void showAllCategories(){
+        String sql = "SELECT id, name FROM Categories";
+        connect();
+        try {
+            ResultSet rs  = statement.executeQuery(sql);
+            System.out.println(FlipTableConverters.fromResultSet(rs));
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private Category createCategory(ResultSet results) throws  SQLException {
