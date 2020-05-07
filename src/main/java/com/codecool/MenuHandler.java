@@ -92,7 +92,7 @@ public class MenuHandler {
         //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
         adminMenu.put(1, productDao::addNewProduct);
-//        adminMenu.put(2, "edit product");
+        adminMenu.put(2, productDao::editProduct);
         adminMenu.put(3, productDao::deactivateProduct);
         adminMenu.put(4, categoryDao::addNewCategory);
         adminMenu.put(5, categoryDao::editProductCategory);

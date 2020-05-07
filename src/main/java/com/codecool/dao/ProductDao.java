@@ -141,4 +141,28 @@ public class ProductDao extends Dao {
             System.out.println(e.getMessage());
         }
     }
+
+    public void editProduct() {
+        System.out.println("Editing product");
+        showAllProducts();
+        int productID = io.gatherIntInput("Enter ID of product to change: ",1, getProducts().size());
+        String newProductName = io.gatherInput("Enter new name of the product: ");
+        float newProductPrice = io.gatherFloatInput("Enter new price of the product: ", (float) 0.01, 99999);
+        int newProductAmount = io.gatherIntInput("Enter new amount of the product: ", 0, 99999);
+        PreparedStatement editProduct;
+        connect();
+        String sql = "UPDATE Products SET name = ?, price = ?, amount = ? WHERE id = ?";
+        try {
+            editProduct = connection.prepareStatement(sql);
+            editProduct.setString(1, newProductName);
+            editProduct.setFloat(2, newProductPrice);
+            editProduct.setInt(3, newProductAmount);
+            editProduct.setInt(4, productID);
+            editProduct.executeUpdate();
+            editProduct.close();
+            connection.close();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
