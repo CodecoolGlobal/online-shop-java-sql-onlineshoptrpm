@@ -78,7 +78,6 @@ public class Basket {
                 randomInt = io.generateRandomNumber();
             } while (!forbiddenInts.contains(randomInt));
         }
-
         return randomInt;
     }
 
@@ -113,14 +112,19 @@ public class Basket {
 
     private String[][] createInnerData() {
         List<String[]> innerData = new ArrayList<>();
-        for (Product product : products) {
-            String[] temp = new String[4];
-            temp[0] = product.getName();
-            temp[1] = String.valueOf(product.getPrice());
-            temp[2] = String.valueOf(product.getAmount());
-            temp[3] = String.valueOf(product.getPrice() * product.getAmount());
-            innerData.add(temp);
+        if (products.size() != 0) {
+            for (Product product : products) {
+                String[] temp = new String[4];
+                temp[0] = product.getName();
+                temp[1] = String.valueOf(product.getPrice());
+                temp[2] = String.valueOf(product.getAmount());
+                temp[3] = String.valueOf(product.getPrice() * product.getAmount());
+                innerData.add(temp);
+            }
+        } else {
+            innerData.add(new String[]{"Your", "Basket", "Is", "Empty"});
         }
+
         return convertTo2DArray(innerData);
     }
 
@@ -135,8 +139,10 @@ public class Basket {
 
     private String[] getTotalExpenses() {
         int totalExpenses = 0;
-        for (Product product : products) {
-            totalExpenses += (product.getPrice() * product.getAmount());
+        if (products.size() != 0) {
+            for (Product product : products) {
+                totalExpenses += (product.getPrice() * product.getAmount());
+            }
         }
         return new String[]{"Total Expenses: " + totalExpenses};
     }

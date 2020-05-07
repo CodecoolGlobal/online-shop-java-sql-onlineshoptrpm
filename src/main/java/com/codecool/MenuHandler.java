@@ -123,7 +123,7 @@ public class MenuHandler {
         customerMenu = new HashMap<>();
         //customerMenu.put(1, this::createNewUser); // left as example
 
-//        customerMenu.put(1, "Show my basket");
+        customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
 //        customerMenu.put(2, "Add product to basket");
 //        customerMenu.put(3, "Remove product from basket");
 //        customerMenu.put(4, "Edit product's quantity");
