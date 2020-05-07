@@ -74,11 +74,11 @@ public class MenuHandler {
         User user = userDao.getUser(email, password);
         switch (user.getRole()) {
             case 1:
-                initializeAdminMenu();
+                initializeAdminMenu(user);
                 adminPanel();
                 break;
             case 2:
-                initializeCustomerMenu();
+                initializeCustomerMenu(user);
                 customerPanel();
                 break;
         }
@@ -88,7 +88,7 @@ public class MenuHandler {
         isRunning = false;
     }
 
-    private void initializeAdminMenu() {
+    private void initializeAdminMenu(User user) {
         //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
         adminMenu.put(1, productDao::addNewProduct);
@@ -108,7 +108,7 @@ public class MenuHandler {
         adminMenu.get(userChoice).run();
     }
 
-    private void initializeCustomerMenu() {
+    private void initializeCustomerMenu(User user) {
         //customerMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         customerMenu = new HashMap<>();
         //customerMenu.put(1, this::createNewUser); // left as example
