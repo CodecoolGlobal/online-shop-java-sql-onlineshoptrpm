@@ -66,17 +66,17 @@ public class UserDao extends Dao{
         throw new NoSuchElementException("There isn't user with specified data in database");
     }
 
-    public void addUser(String userName, String userEmail, String userPassword, int userPhone, int userType) {
+    public void addUser(User user) {
         connect();
         PreparedStatement addUser;
         String addString = "INSERT INTO Users (name, email, password, phone, role_id) VALUES (?, ?, ?, ?, ?)";
         try {
             addUser = connection.prepareStatement(addString);
-            addUser.setString(1, userName);
-            addUser.setString(2, userEmail);
-            addUser.setString(3, userPassword);
-            addUser.setInt(4, userPhone);
-            addUser.setInt(5, userType);
+            addUser.setString(1, user.getName());
+            addUser.setString(2, user.getEmail());
+            addUser.setString(3, user.getPassword());
+            addUser.setInt(4, user.getPhoneNumber());
+            addUser.setInt(5, user.getRole());
             addUser.executeUpdate();
             addUser.close();
             connection.close();
