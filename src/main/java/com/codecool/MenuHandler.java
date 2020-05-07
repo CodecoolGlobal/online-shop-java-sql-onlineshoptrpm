@@ -8,6 +8,7 @@ import com.codecool.models.Category;
 import com.codecool.models.Product;
 import com.codecool.models.User;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,7 +175,7 @@ public class MenuHandler {
         customerMenu.put(2, user::addProductToBasket);
         customerMenu.put(3, user::removeProductFromBasket);
         customerMenu.put(4, user::editProductQuantity);
-//        customerMenu.put(5, "Place an order");
+        customerMenu.put(5, user::placeOrder);
 //        customerMenu.put(6, "Show my previous orders");
         customerMenu.put(7, productDao::showProductsWithRates);
         customerMenu.put(8, this::showProductsByCategoryData);
@@ -183,6 +184,8 @@ public class MenuHandler {
 //        customerMenu.put(11, "Statistics of orders");
         customerMenu.put(12, this::isLogin);
     }
+
+
 
     private void deactivateProductData() {
         productDao.showAllProducts();

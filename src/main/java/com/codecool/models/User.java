@@ -1,11 +1,9 @@
 package com.codecool.models;
 
-import java.text.AttributedString;
-
 import com.codecool.IO;
+import com.codecool.dao.BasketDao;
+import com.codecool.dao.OrdersDao;
 import com.codecool.dao.ProductDao;
-
-import java.text.AttributedString;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +26,10 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
+        initializeNewBasket();
+    }
+
+    private void initializeNewBasket()  throws SQLException{
         this.basket = new Basket(0, new ArrayList<>());
         this.basket.setId(basket.getOrderID());
     }
@@ -131,5 +133,19 @@ public class User {
         Product product = this.getBasket().getProducts().get(id);
         int amount = io.gatherIntInput("Enter new amount of product: ",1,9999); //todo max range zmienic na max dostepna w sklepie
         this.getBasket().setProductQuantity(product, amount);
+    }
+
+    public void placeOrder() {
+        try {
+            OrdersDao ordersDao = new OrdersDao();
+            ordersDao.addOrder(this);
+            BasketDao basketDao = new BasketDao();
+            basketDao.addBasketToBaskets(getBasket());
+            initializeNewBasket();
+            System.out.println("Order placed successfully");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 }

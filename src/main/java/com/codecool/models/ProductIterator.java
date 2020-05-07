@@ -22,7 +22,10 @@ public class ProductIterator implements Iterator<Product> {
     }
 
     public Product next() {
-        this.currentPosition++;
-        return this.products.get(currentPosition - 1);
+        //this.currentPosition++;
+        Product product = this.products.get(this.currentPosition);
+        currentPosition++;
+        return product;
+
     }
 }
