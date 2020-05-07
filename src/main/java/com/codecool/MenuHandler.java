@@ -96,7 +96,7 @@ public class MenuHandler {
         adminMenu.put(1, productDao::addNewProduct);
         adminMenu.put(2, productDao::editProduct);
         adminMenu.put(3, productDao::deactivateProduct);
-        adminMenu.put(4, categoryDao::addNewCategory);
+        adminMenu.put(4, this::getNewCategoryData);
         adminMenu.put(5, this::getCategoryData);
 //        adminMenu.put(6, "Check orders statuses");
 //        adminMenu.put(7, "Discount product");
@@ -110,6 +110,14 @@ public class MenuHandler {
         int id = io.gatherIntInput("Give category number to change: ",1,c.getCategories().size()); //poprawic max range
         String name = io.gatherInput("Give new name for category: ");
         c.editProductCategory(new Category(id, name));
+    }
+
+    private void getNewCategoryData() {
+        CategoryDao c = new CategoryDao();
+        System.out.println("You're adding new category to database");
+        String newCategory = io.gatherInput("Enter name of new category: ");
+        int isNewCatAvailable = io.gatherIntInput("Is new category available?: ",0,1);
+        c.addNewCategory(new Category(isNewCatAvailable, newCategory));
     }
 
     private void adminPanel() {

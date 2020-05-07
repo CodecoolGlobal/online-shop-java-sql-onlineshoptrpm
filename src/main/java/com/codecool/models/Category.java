@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Category {
     private int id;
     private String name;
-    private boolean isAvailable;
+    private int isAvailable;
     private ArrayList<Product> products;
 //    private int categoryID;
 //    private String newCategoryName;
@@ -13,18 +13,22 @@ public class Category {
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
-        this.isAvailable = true;
+        this.isAvailable = 1;
 //        this.categoryID = categoryID;
 //        this.newCategoryName = newCategoryName;
     }
 
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int isAvailable() {
+        return 1;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailable(int available) {
+        this.isAvailable = available;
+    }
+
+    public int getIsAvailable() {
+        return isAvailable;
     }
 
     public int getId() {
