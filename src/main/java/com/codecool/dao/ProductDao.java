@@ -165,4 +165,20 @@ public class ProductDao extends Dao {
             e.printStackTrace();
         }
     }
+
+    public void showAvailableProducts(){
+        String sql = "SELECT p.id,p.name,p.price,p.amount,p.rating, c.name FROM Categories c\n" +
+                "JOIN Products p ON p.category_id = c.id\n" +
+                "where p.is_available =1";
+        connect();
+        try {
+            ResultSet rs  = statement.executeQuery(sql);
+            System.out.println(FlipTableConverters.fromResultSet(rs));
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

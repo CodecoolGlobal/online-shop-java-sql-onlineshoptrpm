@@ -124,7 +124,7 @@ public class MenuHandler {
         //customerMenu.put(1, this::createNewUser); // left as example
 
         customerMenu.put(1, user.getBasket()::seeAllProductsInBasket);
-//        customerMenu.put(2, "Add product to basket");
+        customerMenu.put(2, user::addProductToBasket);
 //        customerMenu.put(3, "Remove product from basket");
 //        customerMenu.put(4, "Edit product's quantity");
 //        customerMenu.put(5, "Place an order");
@@ -142,4 +142,6 @@ public class MenuHandler {
         int userChoice = io.gatherIntInput("\nEnter a number: ", 1, 9);
         customerMenu.get(userChoice).run();
     }
+
+
 }
