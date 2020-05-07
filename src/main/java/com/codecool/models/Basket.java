@@ -45,7 +45,7 @@ public class Basket {
         int productID = product.getId();
         for (Product prod : products) {
             if (productID == prod.getId()) {
-                prod.setAmount(amount);
+                prod.setAmount(amount + prod.getAmount());
                 return;
             }
         }
