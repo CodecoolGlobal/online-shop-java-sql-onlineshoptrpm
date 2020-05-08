@@ -1,5 +1,6 @@
 package com.codecool.dao;
 
+import com.codecool.models.Basket;
 import com.codecool.models.Product;
 import com.jakewharton.fliptables.FlipTableConverters;
 
@@ -7,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ProductDao extends Dao {
@@ -38,32 +40,32 @@ public class ProductDao extends Dao {
         return new Product(id, name, price, amount, is_available, category_id);
     }
 
-    public void addNewProduct(Product product){
+    public void addNewProduct(Product product) {
         connect();
         PreparedStatement addNewProduct;
         String sql = "INSERT INTO Products (name, price, amount, is_available, category_id, rating, no_rates) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             addNewProduct = connection.prepareStatement(sql);
-            addNewProduct.setString(1,product.getName());
-            addNewProduct.setFloat(2,product.getPrice());
-            addNewProduct.setInt(3,product.getAmount());
-            addNewProduct.setInt(4,product.isAvailable());
-            addNewProduct.setInt(5,product.getCategory());
-            addNewProduct.setInt(6,0);
-            addNewProduct.setInt(7,0);
+            addNewProduct.setString(1, product.getName());
+            addNewProduct.setFloat(2, product.getPrice());
+            addNewProduct.setInt(3, product.getAmount());
+            addNewProduct.setInt(4, product.isAvailable());
+            addNewProduct.setInt(5, product.getCategory());
+            addNewProduct.setInt(6, 0);
+            addNewProduct.setInt(7, 0);
             addNewProduct.executeUpdate();
             addNewProduct.close();
             connection.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void showProductsWithRates(){
+    public void showProductsWithRates() {
         String sql = "SELECT id as ID, name as Name, price as Price, amount as Amount, rating as Rating FROM Products WHERE is_available = 1";
         connect();
         try {
-            ResultSet rs  = statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
             System.out.println(FlipTableConverters.fromResultSet(rs));
             rs.close();
             statement.close();
@@ -73,13 +75,13 @@ public class ProductDao extends Dao {
         }
     }
 
-    public void showProductsByCategory(int choice){
+    public void showProductsByCategory(int choice) {
         String sql = "SELECT Products.name as Name\n" +
                 "FROM Products\n" +
-                "INNER JOIN Categories ON Products.category_id = Categories.id WHERE Categories.id = "+choice+"";
+                "INNER JOIN Categories ON Products.category_id = Categories.id WHERE Categories.id = " + choice + "";
         connect();
         try {
-            ResultSet rs  = statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
             System.out.println(FlipTableConverters.fromResultSet(rs));
             rs.close();
             statement.close();
@@ -104,11 +106,11 @@ public class ProductDao extends Dao {
         }
     }
 
-    public void showAllProducts(){
+    public void showAllProducts() {
         String sql = "SELECT * FROM Products";
         connect();
         try {
-            ResultSet rs  = statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
             System.out.println(FlipTableConverters.fromResultSet(rs));
             rs.close();
             statement.close();
@@ -131,18 +133,18 @@ public class ProductDao extends Dao {
             editProduct.executeUpdate();
             editProduct.close();
             connection.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void showAvailableProducts(){
+    public void showAvailableProducts() {
         String sql = "SELECT p.id,p.name,p.price,p.amount,p.rating, c.name FROM Categories c\n" +
                 "JOIN Products p ON p.category_id = c.id\n" +
                 "where p.is_available =1";
         connect();
         try {
-            ResultSet rs  = statement.executeQuery(sql);
+            ResultSet rs = statement.executeQuery(sql);
             System.out.println(FlipTableConverters.fromResultSet(rs));
             rs.close();
             statement.close();
@@ -151,4 +153,26 @@ public class ProductDao extends Dao {
             System.out.println(e.getMessage());
         }
     }
+
+    public void updateProducts(Basket basket) throws SQLException {
+        Iterator<Product> basketIterator = basket.getIterator();
+        connect();
+        PreparedStatement insertToBaskets;
+        String insertOrderString = "UPDATE Products SET amount = amount - ? WHERE id = ?";
+        while (basketIterator.hasNext()) {
+            try {
+                insertToBaskets = connection.prepareStatement(insertOrderString);
+                Product tempProduct = basketIterator.next();
+                insertToBaskets.setInt(1, tempProduct.getAmount());
+                insertToBaskets.setInt(2, tempProduct.getId());
+                insertToBaskets.executeUpdate();
+                insertToBaskets.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        connection.close();
+    }
+
 }

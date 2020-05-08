@@ -142,6 +142,8 @@ public class User {
             ordersDao.addOrder(this);
             BasketDao basketDao = new BasketDao();
             basketDao.addBasketToBaskets(getBasket());
+            ProductDao productDao = new ProductDao();
+            productDao.updateProducts(getBasket());
             initializeNewBasket();
             System.out.println("Order placed successfully");
         } catch (SQLException e){
