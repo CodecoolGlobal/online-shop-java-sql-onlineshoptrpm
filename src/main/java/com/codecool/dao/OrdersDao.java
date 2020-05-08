@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import com.codecool.models.Order;
 import com.codecool.models.OrderStatus;
 import com.codecool.models.User;
+import com.jakewharton.fliptables.FlipTableConverters;
 
 public class OrdersDao extends Dao {
 
@@ -98,5 +99,20 @@ public class OrdersDao extends Dao {
                 e.printStackTrace();
             }
         }
+
+    public void showOrders(User user) {
+        String sql = "SELECT * FROM Orders\n" +
+                "WHERE user_id = " + user.getId()+"";
+        connect();
+        try {
+            ResultSet rs  = statement.executeQuery(sql);
+            System.out.println(FlipTableConverters.fromResultSet(rs));
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

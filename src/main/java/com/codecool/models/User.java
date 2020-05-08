@@ -196,4 +196,11 @@ public class User {
         }
         return new String[]{"Total Expenses: " + totalExpenses};
     }
+
+
+    public void showPreviousOrders() {
+        OrdersDao ordersDao = new OrdersDao();
+        System.out.println("Your Previous Orders List: ");
+        ordersDao.showOrders(this);
+    }
 }

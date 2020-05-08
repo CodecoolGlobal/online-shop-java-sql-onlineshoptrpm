@@ -98,7 +98,6 @@ public class MenuHandler {
     }
 
     private void initializeAdminMenu(User user) {
-        //adminMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         adminMenu = new HashMap<>();
         adminMenu.put(1, this::addNewProductData);
         adminMenu.put(2, this::editProductData);
@@ -168,15 +167,13 @@ public class MenuHandler {
     }
 
     private void initializeCustomerMenu(User user) {
-        //customerMenuList = new String[] {"1. xxx", "2. xxx", "3. xxx"};
         customerMenu = new HashMap<>();
-        //customerMenu.put(1, this::createNewUser); // left as example
         customerMenu.put(1, user::seeAllProductsInBasket);
         customerMenu.put(2, user::addProductToBasket);
         customerMenu.put(3, user::removeProductFromBasket);
         customerMenu.put(4, user::editProductQuantity);
         customerMenu.put(5, user::placeOrder);
-//        customerMenu.put(6, "Show my previous orders");
+        customerMenu.put(6, user::showPreviousOrders);
         customerMenu.put(7, productDao::showProductsWithRates);
         customerMenu.put(8, this::showProductsByCategoryData);
 //        customerMenu.put(9, "Check availability of product");
