@@ -1,6 +1,6 @@
 package com.codecool.dao;
-import com.codecool.models.User;
 
+import com.codecool.models.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,17 +41,6 @@ public class UserDao extends Dao{
             statement.setString(1, email);
             statement.setString(2, password);
             ResultSet results = statement.executeQuery();
-//
-//            while (results.next()) {
-//                int id = results.getInt("id");
-//                String name = results.getString("name");
-//                String surname = results.getString("surname");
-//                int role = results.getInt("role_id");
-//
-//
-//                user = new User(id, name, surname, email, password, id);
-//                return user;
-//            }
             List<User> users = getUsers();
             int indexDifference = 1;
             int id = results.getInt("id") - indexDifference;

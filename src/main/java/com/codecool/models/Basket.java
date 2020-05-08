@@ -2,10 +2,7 @@ package com.codecool.models;
 
 import com.codecool.IO;
 import com.codecool.dao.BasketDao;
-import com.jakewharton.fliptables.FlipTable;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +26,39 @@ public class Basket {
         this.productId = productId;
         this.orderID = orderId;
         this.quantity = quantity;
+    }
+
+    private int generateOrderID() throws SQLException {
+        IO io = new IO();
+        BasketDao basketDao = new BasketDao();
+        int randomInt = 1;
+        List<Integer> forbiddenInts = basketDao.getAllOrdersID();
+        if (forbiddenInts.size() != 0) {
+            do {
+                randomInt = io.generateRandomNumber();
+            } while (!forbiddenInts.contains(randomInt));
+        }
+        return randomInt;
+    }
+
+    public void addProduct(Product product, int amount) {
+        int productID = product.getId();
+        for (Product prod : products) {
+            if (productID == prod.getId()) {
+                prod.setAmount(amount + prod.getAmount());
+                return;
+            }
+        }
+        product.setAmount(amount);
+        products.add(product);
+    }
+
+    public void deleteProduct(Product product) {
+        products.remove(product);
+    }
+
+    public void setProductQuantity(Product product, int quantity) {
+        product.setAmount(quantity);
     }
 
     public Iterator<Product> getIterator() {
@@ -73,38 +103,5 @@ public class Basket {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    private int generateOrderID() throws SQLException {
-        IO io = new IO();
-        BasketDao basketDao = new BasketDao();
-        int randomInt = 1;
-        List<Integer> forbiddenInts = basketDao.getAllOrdersID();
-        if (forbiddenInts.size() != 0) {
-            do {
-                randomInt = io.generateRandomNumber();
-            } while (!forbiddenInts.contains(randomInt));
-        }
-        return randomInt;
-    }
-
-    public void addProduct(Product product, int amount) {
-        int productID = product.getId();
-        for (Product prod : products) {
-            if (productID == prod.getId()) {
-                prod.setAmount(amount + prod.getAmount());
-                return;
-            }
-        }
-        product.setAmount(amount);
-        products.add(product);
-    }
-
-    public void deleteProduct(Product product) {
-        products.remove(product);
-    }
-
-    public void setProductQuantity(Product product, int quantity) {
-        product.setAmount(quantity);
     }
 }

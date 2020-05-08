@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ProductIterator implements Iterator<Product> {
-    private List<Product> products;
+    private final List<Product> products;
     private int currentPosition;
 
     public ProductIterator(List<Product> products) {

@@ -7,15 +7,11 @@ public class Category {
     private String name;
     private int isAvailable;
     private ArrayList<Product> products;
-//    private int categoryID;
-//    private String newCategoryName;
 
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
         this.isAvailable = 1;
-//        this.categoryID = categoryID;
-//        this.newCategoryName = newCategoryName;
     }
 
     public int isAvailable() {

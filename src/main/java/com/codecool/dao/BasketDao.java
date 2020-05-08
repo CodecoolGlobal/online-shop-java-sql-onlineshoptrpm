@@ -1,9 +1,7 @@
 package com.codecool.dao;
 
 import com.codecool.models.Basket;
-import com.codecool.models.OrderStatus;
 import com.codecool.models.Product;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

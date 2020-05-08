@@ -21,10 +21,6 @@ public class OrdersDao extends Dao {
         //addOrderData();
     }
 
-    public List<Order> getOrderData() {
-        return orders;
-    }
-
     public void addOrder(User user) {
         connect();
         String insertOrderString = "INSERT INTO Orders\n"

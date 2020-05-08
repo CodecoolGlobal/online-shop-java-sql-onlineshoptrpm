@@ -7,8 +7,6 @@ import com.codecool.dao.UserDao;
 import com.codecool.models.Category;
 import com.codecool.models.Product;
 import com.codecool.models.User;
-
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +38,6 @@ public class MenuHandler {
         this.productDao = new ProductDao();
         this.categoryDao = new CategoryDao();
         this.ordersDao = new OrdersDao();
-        //todo add rest of Dao when created
     }
 
     private void initializeMainMenu() {
@@ -83,7 +80,7 @@ public class MenuHandler {
         isLogin = true;
         switch (user.getRole()) {
             case 1:
-                initializeAdminMenu(user);
+                initializeAdminMenu();
                 adminPanel();
                 break;
             case 2:
@@ -97,7 +94,7 @@ public class MenuHandler {
         isRunning = false;
     }
 
-    private void initializeAdminMenu(User user) {
+    private void initializeAdminMenu() {
         adminMenu = new HashMap<>();
         adminMenu.put(1, this::addNewProductData);
         adminMenu.put(2, this::editProductData);
@@ -112,7 +109,7 @@ public class MenuHandler {
 
     private void getCategoryData() {
         System.out.println("You are changing product category name");
-        int id = io.gatherIntInput("Give category number to change: ",1,categoryDao.getCategories().size()); //poprawic max range
+        int id = io.gatherIntInput("Give category number to change: ",1,categoryDao.getCategories().size());
         String name = io.gatherInput("Give new name for category: ");
         categoryDao.editProductCategory(new Category(id, name));
     }
@@ -181,8 +178,6 @@ public class MenuHandler {
 //        customerMenu.put(11, "Statistics of orders");
         customerMenu.put(12, this::isLogin);
     }
-
-
 
     private void deactivateProductData() {
         productDao.showAllProducts();

@@ -3,7 +3,7 @@ package com.codecool;
 import java.util.Scanner;
 import java.util.Random;
 
-public class IO<userFloat> {
+public class IO {
     public Scanner scan;
 
     public IO() {

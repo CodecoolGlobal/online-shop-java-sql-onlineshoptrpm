@@ -3,7 +3,6 @@ package com.codecool.dao;
 import com.codecool.models.Basket;
 import com.codecool.models.Product;
 import com.jakewharton.fliptables.FlipTableConverters;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
