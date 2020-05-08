@@ -5,25 +5,20 @@ import java.util.ArrayList;
 public class Category {
     private int id;
     private String name;
-    private int isAvailable;
+    private int isAvailable = 1;
     private ArrayList<Product> products;
 
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
-        this.isAvailable = 1;
     }
 
     public int isAvailable() {
-        return 1;
+        return isAvailable;
     }
 
     public void setAvailable(int available) {
         this.isAvailable = available;
-    }
-
-    public int getIsAvailable() {
-        return isAvailable;
     }
 
     public int getId() {

@@ -12,16 +12,7 @@ public class Order {
     private String date;
     private String status;
 
-    private Order(Builder builder) {
-        this.orderId = builder.orderId;
-        this.userId = builder.userId;
-        this.productAmount = builder.productAmount;
-        this.productId = builder.productId;
-        this.productAmountPrice = builder.productAmountPrice;
-        this.productName = builder.productName;
-        this.totalPrice = builder.totalPrice;
-        this.date = builder.date;
-        this.status = builder.status;
+    public Order() {
     }
 
     public int getProductAmountPrice() {
@@ -64,64 +55,48 @@ public class Order {
         return this.orderId.compareTo(other.orderId);
     }
 
-    public static class Builder {
-        private Integer orderId;
-        private String date;
-        private int userId;
-        private int totalPrice;
-        private int productId;
-        private String productName;
-        private int productAmount;
-        private int productAmountPrice;
-        private String status;
+    public Order setOrderId(Integer orderId) {
+        this.orderId = orderId;
+        return this;
+    }
 
-        public Builder withOrderId(Integer orderId) {
-            this.orderId = orderId;
-            return this;
-        }
+    public Order setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
 
-        public Builder withUserId(int userId) {
-            this.userId = userId;
-            return this;
-        }
+    public Order setProductId(int productId) {
+        this.productId = productId;
+        return this;
+    }
 
-        public Builder withProductId(int productId) {
-            this.productId = productId;
-            return this;
-        }
+    public Order setProductName(String productName) {
+        this.productName = productName;
+        return this;
+    }
 
-        public Builder withProductName(String productName) {
-            this.productName = productName;
-            return this;
-        }
+    public Order setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
+        return this;
+    }
 
-        public Builder withProductAmount(int productAmount) {
-            this.productAmount = productAmount;
-            return this;
-        }
+    public Order setProductAmountPrice(int productAmountPrice) {
+        this.productAmountPrice = productAmountPrice;
+        return this;
+    }
 
-        public Builder withProductAmountPrice(int productAmountPrice) {
-            this.productAmountPrice = productAmountPrice;
-            return this;
-        }
+    public Order setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+        return this;
+    }
 
-        public Builder withTotalPrice(int totalPrice) {
-            this.totalPrice = totalPrice;
-            return this;
-        }
+    public Order setDate(String date) {
+        this.date = date;
+        return this;
+    }
 
-        public Builder withDate(String date) {
-            this.date = date;
-            return this;
-        }
-
-        public Builder withStatus(String status) {
-            this.status = status;
-            return this;
-        }
-
-        public Order build() {
-            return new Order(this);
-        }
+    public Order setStatus(String status) {
+        this.status = status;
+        return this;
     }
 }

@@ -42,10 +42,9 @@ public class Basket {
     }
 
     public void addProduct(Product product, int amount) {
-        int productID = product.getId();
         for (Product prod : products) {
-            if (productID == prod.getId()) {
-                prod.setAmount(amount + prod.getAmount());
+            if (product.getId() == prod.getId()) {
+                prod.setAmount(amount);
                 return;
             }
         }

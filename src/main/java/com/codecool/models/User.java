@@ -15,16 +15,24 @@ public class User {
     private String password;
     private String email;
     private int phoneNumber;
-    private int role;
+    private int role = 2;
     private Basket basket;
     private final IO io = new IO();
 
-    public User(int id, String name, String password, String email, int phoneNumber, int role) throws SQLException {
-        this.id = id;
+    public User(String name, String password, String email, int phoneNumber) throws SQLException {
         this.name = name;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        initializeNewBasket();
+    }
+
+    public User(int id, String name, String password, String email, int phoneNumber, int role) throws SQLException {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.id = id;
         this.role = role;
         initializeNewBasket();
     }

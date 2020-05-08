@@ -41,7 +41,6 @@ public class OrdersDao extends Dao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
 
         public void updateOrderStatus ( int orderId, String status){
@@ -76,16 +75,18 @@ public class OrdersDao extends Dao {
                     String date = resultSet.getString("date");
                     String status = resultSet.getString("status");
 
-                    order = new Order.Builder()
-                            .withOrderId(orderId)
-                            .withProductId(productId)
-                            .withProductName(productName)
-                            .withProductAmount(productAmount)
-                            .withProductAmountPrice(productAmountPrice)
-                            .withUserId(userId)
-                            .withDate(date)
-                            .withStatus(status)
-                            .build();
+                    order = new Order();
+                    order.setOrderId(orderId)
+                            .setDate(date)
+                            .setProductId(productId);
+
+                    //                            .withProductName(productName)
+//                            .withProductAmount(productAmount)
+//                            .withProductAmountPrice(productAmountPrice)
+//                            .withUserId(userId)
+//                            .withDate(date)
+//                            .withStatus(status)
+//                            .build();
                     orders.add(order);
                 }
                 resultSet.close();
@@ -97,8 +98,7 @@ public class OrdersDao extends Dao {
         }
 
     public void showOrders(User user) {
-        String sql = "SELECT * FROM Orders\n" +
-                "WHERE user_id = " + user.getId()+"";
+        String sql = "SELECT * FROM Orders WHERE user_id = " + user.getId()+"";
         connect();
         try {
             ResultSet rs  = statement.executeQuery(sql);

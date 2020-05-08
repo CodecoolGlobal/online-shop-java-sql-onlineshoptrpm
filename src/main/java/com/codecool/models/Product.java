@@ -55,7 +55,7 @@ public class Product {
     }
 
     public void setAmount(int amount) {
-        this.amount = amount;
+        this.amount += amount;
     }
 
     public void setAvailable(int available) {

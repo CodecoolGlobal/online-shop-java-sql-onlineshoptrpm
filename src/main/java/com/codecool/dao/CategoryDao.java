@@ -53,7 +53,7 @@ public class CategoryDao extends Dao {
         try {
             addNewCategory = connection.prepareStatement(sql);
             addNewCategory.setString(1,category.getName());
-            addNewCategory.setInt(2,category.getIsAvailable());
+            addNewCategory.setInt(2,category.isAvailable());
             addNewCategory.executeUpdate();
             addNewCategory.close();
             connection.close();

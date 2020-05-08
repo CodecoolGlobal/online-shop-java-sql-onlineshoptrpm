@@ -1,9 +1,7 @@
 package com.codecool.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
 public abstract class Dao {
     protected Connection connection;
@@ -11,6 +9,15 @@ public abstract class Dao {
 
     public static final String DB_NAME = "src/main/resources/newShopDB.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
+
+    public ResultSet select(String table, ArrayList<String> columns) throws SQLException {
+        String query = "SELECT ? FROM ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, columns.toString());
+        preparedStatement.setString(2, table);
+
+        return statement.executeQuery(query);
+    }
 
     public void connect() {
         try {

@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class MenuHandler {
     public boolean isRunning;
-    private Map<Integer, Runnable> mainMenu;
     private String[] mainMenuList;
     private final UI ui;
     private final IO io;
@@ -21,6 +20,7 @@ public class MenuHandler {
     private ProductDao productDao;
     private CategoryDao categoryDao;
     private OrdersDao ordersDao;
+    private Map<Integer, Runnable> mainMenu;
     private Map<Integer, Runnable> adminMenu;
     private Map<Integer, Runnable> customerMenu;
     private boolean isLogin;
@@ -61,9 +61,8 @@ public class MenuHandler {
         //todo add double entering email and password for checking correctness and if is already in database
         String password = io.gatherInput("Enter your password: "); //todo cover password in console with "*"
         int phone = io.gatherIntInput("Enter your phone number: ",0, 999999999);
-        int role = 2; //default for customer
         try {
-            User user = new User(0, name, password, email, phone, role);
+            User user = new User(name, password, email, phone);
             userDao.addUser(user);
             io.gatherEmptyInput("Account successfully created!\nPress any key to back to main menu.");
         }
@@ -78,6 +77,8 @@ public class MenuHandler {
         String password = io.gatherInput("Enter Password: ");
         User user = userDao.getUser(email, password);
         isLogin = true;
+        //            user.getMenu(); todo it's better to use polimorphism here
+
         switch (user.getRole()) {
             case 1:
                 initializeAdminMenu();
@@ -124,7 +125,8 @@ public class MenuHandler {
     private void showProductsByCategoryData() {
         System.out.println("Choose category: ");
         for (Category category: categoryDao.getCategories())
-            System.out.println(category.getId() + " " + category.getName());
+//            System.out.println(category.getId() + " " + category.getName());
+            System.out.println(String.format("{} {}", category.getId(), category.getName()));
         int choice = io.gatherIntInput("Enter number of category: ",1, categoryDao.getCategories().size());
         productDao.showProductsByCategory(choice);
     }
